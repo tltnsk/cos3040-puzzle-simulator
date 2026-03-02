@@ -1,0 +1,93 @@
+"""
+Loading puzzles from a JSON file.
+"""
+
+import json
+
+from models.guess_word_puzzle import GuessWordPuzzle
+from models.riddle_puzzle import RiddlePuzzle
+from models.equation_puzzle import EquationPuzzle
+from models.logic_puzzle import LogicPuzzle
+
+
+def _require_field(entry, field_name):
+    if field_name not in entry:
+        raise KeyError(f"Missing required field '{field_name}' in puzzle entry: {entry}")
+    return entry[field_name]
+
+
+def load_puzzles(file_path):
+    """
+    Load puzzles from a JSON file and return a list of puzzle objects.
+
+    Expected JSON structure: a list of objects, each with a 'type' field
+    and the fields required by that puzzle type.
+    """
+    with open(file_path, "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    if not isinstance(data, list):
+        raise ValueError("Puzzle data must be a list of puzzle objects.")
+
+    puzzles = []
+
+    for entry in data:
+        puzzle_type = _require_field(entry, "type").strip().lower()
+        puzzle_id = _require_field(entry, "id")
+        description = _require_field(entry, "description")
+        difficulty = _require_field(entry, "difficulty")
+        max_attempts = _require_field(entry, "max_attempts")
+        points = _require_field(entry, "points")
+
+        if puzzle_type == "guess_word":
+            puzzles.append(
+                GuessWordPuzzle(
+                    puzzle_id,
+                    description,
+                    difficulty,
+                    max_attempts,
+                    points,
+                    _require_field(entry, "correct_answer"),
+                    entry.get("allowed_variations", []),
+                )
+            )
+        elif puzzle_type == "riddle":
+            puzzles.append(
+                RiddlePuzzle(
+                    puzzle_id,
+                    description,
+                    difficulty,
+                    max_attempts,
+                    points,
+                    _require_field(entry, "correct_answer"),
+                    entry.get("hints", []),
+                )
+            )
+        elif puzzle_type == "equation":
+            puzzles.append(
+                EquationPuzzle(
+                    puzzle_id,
+                    description,
+                    difficulty,
+                    max_attempts,
+                    points,
+                    _require_field(entry, "correct_result"),
+                    _require_field(entry, "equation_expression"),
+                )
+            )
+        elif puzzle_type == "logic":
+            puzzles.append(
+                LogicPuzzle(
+                    puzzle_id,
+                    description,
+                    difficulty,
+                    max_attempts,
+                    points,
+                    _require_field(entry, "correct_result"),
+                    _require_field(entry, "explanation"),
+                )
+            )
+        else:
+            raise ValueError(f"Unknown puzzle type '{puzzle_type}' in entry: {entry}")
+
+    return puzzles

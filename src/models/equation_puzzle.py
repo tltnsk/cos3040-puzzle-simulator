@@ -2,9 +2,9 @@
 Defines the EquationPuzzle class
 """
 
-from .math_puzzle import Puzzle
+from .math_puzzle import MathPuzzle
 
-class EquationPuzzle(Puzzle):
+class EquationPuzzle(MathPuzzle):
     """
     Puzzle where the player solves a mathematical equation
     """

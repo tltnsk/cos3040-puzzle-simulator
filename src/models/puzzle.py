@@ -5,12 +5,12 @@ Defines the abstract Puzzle base class
 from abc import ABC, abstractmethod
 
 class Puzzle(ABC):
-    def __init__(self, puzzle_id, description, difficulty, max_attempts, attempts_made, points, is_solved):
+    def __init__(self, puzzle_id, description, difficulty, max_attempts, points, attempts_made=0, is_solved=False):
         self.__id = puzzle_id
         self.__description = description
         self.__difficulty = difficulty
         self.__max_attempts = max_attempts
-        self.__attempts_made = 0
+        self.__attempts_made = attempts_made
         self.__points = points
         self.__is_solved = is_solved
 
