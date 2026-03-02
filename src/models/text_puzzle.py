@@ -1,3 +1,7 @@
+"""
+Defines the TextPuzzle class - puzzle where the required answer is text-based
+"""
+
 from .puzzle import Puzzle
 
 class TextPuzzle(Puzzle):

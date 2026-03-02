@@ -1,0 +1,205 @@
+[
+  {
+    "id": "GW-001",
+    "type": "guess_word",
+    "description": "Guess the word: a large body of salt water.",
+    "difficulty": 1,
+    "max_attempts": 3,
+    "points": 10,
+    "correct_answer": "ocean",
+    "allowed_variations": ["the ocean"]
+  },
+  {
+    "id": "GW-002",
+    "type": "guess_word",
+    "description": "Guess the word: a device used to take photos.",
+    "difficulty": 1,
+    "max_attempts": 3,
+    "points": 10,
+    "correct_answer": "camera",
+    "allowed_variations": ["the camera"]
+  },
+  {
+    "id": "GW-003",
+    "type": "guess_word",
+    "description": "Guess the word: the opposite of 'cold'.",
+    "difficulty": 1,
+    "max_attempts": 2,
+    "points": 10,
+    "correct_answer": "hot",
+    "allowed_variations": []
+  },
+  {
+    "id": "GW-004",
+    "type": "guess_word",
+    "description": "Guess the word: a place where books are borrowed.",
+    "difficulty": 2,
+    "max_attempts": 3,
+    "points": 15,
+    "correct_answer": "library",
+    "allowed_variations": ["the library"]
+  },
+  {
+    "id": "GW-005",
+    "type": "guess_word",
+    "description": "Guess the word: a fruit that keeps the doctor away.",
+    "difficulty": 2,
+    "max_attempts": 3,
+    "points": 15,
+    "correct_answer": "apple",
+    "allowed_variations": ["an apple"]
+  },
+
+  {
+    "id": "RD-001",
+    "type": "riddle",
+    "description": "What has keys but cannot open locks?",
+    "difficulty": 1,
+    "max_attempts": 3,
+    "points": 15,
+    "correct_answer": "piano",
+    "hints": ["It makes music.", "It has black and white keys."]
+  },
+  {
+    "id": "RD-002",
+    "type": "riddle",
+    "description": "What has a face and two hands but no arms or legs?",
+    "difficulty": 1,
+    "max_attempts": 3,
+    "points": 15,
+    "correct_answer": "clock",
+    "hints": ["It tells time.", "It ticks or chimes."]
+  },
+  {
+    "id": "RD-003",
+    "type": "riddle",
+    "description": "What gets wetter the more it dries?",
+    "difficulty": 2,
+    "max_attempts": 3,
+    "points": 20,
+    "correct_answer": "towel",
+    "hints": ["It is used in bathrooms.", "It absorbs water."]
+  },
+  {
+    "id": "RD-004",
+    "type": "riddle",
+    "description": "What can travel around the world while staying in a corner?",
+    "difficulty": 2,
+    "max_attempts": 3,
+    "points": 20,
+    "correct_answer": "stamp",
+    "hints": ["It sticks to something.", "It is used in mail."]
+  },
+  {
+    "id": "RD-005",
+    "type": "riddle",
+    "description": "I speak without a mouth and hear without ears. What am I?",
+    "difficulty": 3,
+    "max_attempts": 3,
+    "points": 25,
+    "correct_answer": "echo",
+    "hints": ["You can hear it in caves.", "It repeats what you say."]
+  },
+
+  {
+    "id": "EQ-001",
+    "type": "equation",
+    "description": "Solve for x: 2x + 4 = 10",
+    "difficulty": 1,
+    "max_attempts": 3,
+    "points": 15,
+    "correct_result": 3,
+    "equation_expression": "2x + 4 = 10"
+  },
+  {
+    "id": "EQ-002",
+    "type": "equation",
+    "description": "Solve for x: x/3 = 5",
+    "difficulty": 1,
+    "max_attempts": 3,
+    "points": 15,
+    "correct_result": 15,
+    "equation_expression": "x/3 = 5"
+  },
+  {
+    "id": "EQ-003",
+    "type": "equation",
+    "description": "Solve for x: 5x - 7 = 18",
+    "difficulty": 2,
+    "max_attempts": 3,
+    "points": 20,
+    "correct_result": 5,
+    "equation_expression": "5x - 7 = 18"
+  },
+  {
+    "id": "EQ-004",
+    "type": "equation",
+    "description": "Solve for x: 3x + 2 = 2x + 9",
+    "difficulty": 2,
+    "max_attempts": 3,
+    "points": 20,
+    "correct_result": 7,
+    "equation_expression": "3x + 2 = 2x + 9"
+  },
+  {
+    "id": "EQ-005",
+    "type": "equation",
+    "description": "Solve for x: 4(x - 2) = 12",
+    "difficulty": 2,
+    "max_attempts": 3,
+    "points": 20,
+    "correct_result": 5,
+    "equation_expression": "4(x - 2) = 12"
+  },
+
+  {
+    "id": "LG-001",
+    "type": "logic",
+    "description": "If all squares are rectangles and all rectangles are shapes, how many of these are true?",
+    "difficulty": 1,
+    "max_attempts": 2,
+    "points": 15,
+    "correct_result": 2,
+    "explanation": "Both statements are true: squares are rectangles, and rectangles are shapes."
+  },
+  {
+    "id": "LG-002",
+    "type": "logic",
+    "description": "In a class, 12 students like math, 8 like science, and 5 like both. How many like at least one?",
+    "difficulty": 2,
+    "max_attempts": 3,
+    "points": 20,
+    "correct_result": 15,
+    "explanation": "Use inclusion-exclusion: 12 + 8 - 5 = 15."
+  },
+  {
+    "id": "LG-003",
+    "type": "logic",
+    "description": "You have 3 switches and a lamp in another room. How many trips are needed to determine the correct switch?",
+    "difficulty": 2,
+    "max_attempts": 2,
+    "points": 20,
+    "correct_result": 1,
+    "explanation": "You can determine it in one trip by using heat from an off bulb."
+  },
+  {
+    "id": "LG-004",
+    "type": "logic",
+    "description": "If one statement is true and one is false, how many total truth values are there?",
+    "difficulty": 1,
+    "max_attempts": 2,
+    "points": 15,
+    "correct_result": 2,
+    "explanation": "There are two truth values: true and false."
+  },
+  {
+    "id": "LG-005",
+    "type": "logic",
+    "description": "A farmer has 3 chickens and 2 cows. How many legs are there in total?",
+    "difficulty": 1,
+    "max_attempts": 2,
+    "points": 15,
+    "correct_result": 14,
+    "explanation": "Chickens have 2 legs each (3*2=6) and cows have 4 legs each (2*4=8). Total 14."
+  }
+]

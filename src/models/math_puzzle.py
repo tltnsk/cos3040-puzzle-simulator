@@ -1,3 +1,7 @@
+"""
+Defines the MathPuzzle class - puzzle where the required answer is a mathematical result
+"""
+
 from .puzzle import Puzzle
 
 class MathPuzzle(Puzzle):
