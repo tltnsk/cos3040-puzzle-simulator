@@ -7,6 +7,8 @@ class TextPuzzle(Puzzle):
                          points)
         self.__correct_answer = correct_answer
         self.__allowed_variations = allowed_variations or []
-
+    
+    def get_correct_answer(self):
+        return self.__correct_answer
 
     
