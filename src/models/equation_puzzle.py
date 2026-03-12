@@ -56,6 +56,7 @@ class EquationPuzzle(MathPuzzle):
         """
         try:
             user_result = float(user_input)
+            # Compare user result to the correct result with allowed tolerance
             return math.isclose(user_result, self.get_correct_result(), rel_tol=self.__tolerance)
         except ValueError:
             return False

@@ -1,5 +1,9 @@
 """
-Defines the LogicPuzzle class
+Defines the LogicPuzzle class.
+
+This class represents a puzzle where the player solves a logic problem.
+The provided answer needs to be an integer.  
+The player's answer is validated against the correct result.
 """
 from .math_puzzle import MathPuzzle
 
@@ -13,11 +17,33 @@ class LogicPuzzle(MathPuzzle):
                          points, correct_result)
         self.__explanation = explanation
 
+
+    def get_explanation(self):
+        """
+        Getter for the explanation of the correct answer.
+
+        Returns
+        -------
+        str
+            The explanation of the correct answer.
+        """
+        return self.__explanation
+
     def check_solution(self, user_input):
         """
         Check if the player's numeric answer is correct
+
+        Parameters
+        ----------
+        user_input : str
+            The user's answer to the puzzle.
+
+        Returns
+        -------
+        bool
+            True if the user's answer is correct, False otherwise.
         """
         try:
-            return float(user_input) == self.get_correct_result()
+            return int(user_input) == self.get_correct_result()
         except ValueError:
             return False
