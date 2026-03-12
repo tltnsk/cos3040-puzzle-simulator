@@ -12,9 +12,9 @@ class LogicPuzzle(MathPuzzle):
     Puzzle that validates a numeric logical answer.
     """
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
-                 points, correct_result, explanation):
+                 points, correct_result, explanation, attempts_made=0, is_solved=False):
         super().__init__(puzzle_id, description, difficulty, max_attempts,
-                         points, correct_result)
+                         points, correct_result, attempts_made, is_solved)
         self.__explanation = explanation
 
 
@@ -44,6 +44,12 @@ class LogicPuzzle(MathPuzzle):
             True if the user's answer is correct, False otherwise.
         """
         try:
-            return int(user_input) == self.get_correct_result()
+            user_result = int(user_input)
         except ValueError:
             return False
+
+        self.set_attempts_made(self.get_attempts_made() + 1)
+        is_correct = user_result == self.get_correct_result()
+        if is_correct:
+            self.set_solved(True)
+        return is_correct

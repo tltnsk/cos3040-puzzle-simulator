@@ -46,20 +46,25 @@ class TextPuzzle(Puzzle):
 
         """
 
-        # Increase the attempts made
-        # Also handles logic to check whether attempts made exceeds max attempt
-        self.set_attempts_made(self.get_attempts_made() + 1)
-
         # Validate user input - it shouldn't be empty and it should be a string 
         if not user_input or not isinstance(user_input, str):
             return False
+
+        # Increase attempts for a real submission.
+        # set_attempts_made enforces not exceeding max_attempts.
+        self.set_attempts_made(self.get_attempts_made() + 1)
         
         # Normalize input and compare it to the correct answer
         normalized_input = user_input.strip().lower()
         if normalized_input == self.__correct_answer.strip().lower():
-            return 
+            self.set_solved(True)
+            return True
         
         # Check if the input matches any of the allowed variations
-        return normalized_input in [variation.strip().lower() for variation in self.__allowed_variations]
+        if normalized_input in [variation.strip().lower() for variation in self.__allowed_variations]:
+            self.set_solved(True)
+            return True
+
+        return False
 
     

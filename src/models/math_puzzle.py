@@ -6,7 +6,7 @@ Defines a correct result.
 
 Attributes
 ----------
-__correct_result: str
+__correct_result: float
     The correct result to the puzzle.
 """
 
@@ -41,6 +41,12 @@ class MathPuzzle(Puzzle):
 
         """
         try:
-            return float(user_input) == self.__correct_result
+            user_result = float(user_input)
         except ValueError:
             return False
+
+        self.set_attempts_made(self.get_attempts_made() + 1)
+        is_correct = user_result == self.__correct_result
+        if is_correct:
+            self.set_solved(True)
+        return is_correct

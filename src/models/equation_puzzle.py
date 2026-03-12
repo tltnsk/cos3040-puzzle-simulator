@@ -14,10 +14,8 @@ class EquationPuzzle(MathPuzzle):
     """
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
                  points, equation, correct_result, tolerance=1e-9, attempts_made=0, is_solved=False):
-        super().__init__(puzzle_id, description, difficulty, max_attempts,
-                         points, correct_result, attempts_made, is_solved)
         """
-        Intitalizes an equaiton-based puzzle.
+        Initializes an equation-based puzzle.
 
         Parameters
         ----------
@@ -26,6 +24,8 @@ class EquationPuzzle(MathPuzzle):
         correct_result: float
             The precomputed correct result of the equation.
         """
+        super().__init__(puzzle_id, description, difficulty, max_attempts,
+                         points, correct_result, attempts_made, is_solved)
         self.__equation = equation
         self.__tolerance = tolerance  # Tolerance for floating-point comparison
 
@@ -57,6 +57,10 @@ class EquationPuzzle(MathPuzzle):
         try:
             user_result = float(user_input)
             # Compare user result to the correct result with allowed tolerance
-            return math.isclose(user_result, self.get_correct_result(), rel_tol=self.__tolerance)
+            self.set_attempts_made(self.get_attempts_made() + 1)
+            is_correct = math.isclose(user_result, self.get_correct_result(), rel_tol=self.__tolerance)
+            if is_correct:
+                self.set_solved(True)
+            return is_correct
         except ValueError:
             return False

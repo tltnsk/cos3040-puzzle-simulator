@@ -3,7 +3,7 @@ Defines the RiddlePuzzle class
 
 This class is a puzzle which requires the player to guess the solution of a riddle.
 The answer needs to be a string.
-The player's answer is validated against the correct result.
+The player's answer is validated against the correct answer.
 """
 
 from .text_puzzle import TextPuzzle
@@ -13,9 +13,9 @@ class RiddlePuzzle(TextPuzzle):
     Puzzle where the player guesses a riddle word
     """
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
-                 points, correct_answer, hints):
+                 points, correct_answer, hints, attempts_made=0, is_solved=False):
         super().__init__(puzzle_id, description, difficulty, max_attempts,
-                         points, correct_answer)
+                         points, correct_answer, allowed_variations=None, attempts_made=attempts_made, is_solved=is_solved)
         
         self.__hints = hints
         self.__hints_used_count = 0
@@ -74,4 +74,4 @@ class RiddlePuzzle(TextPuzzle):
         bool
             True if the answer is correct, False otherwise.
         """
-        return user_input.strip().lower() == self.get_correct_answer().strip().lower()
+        return super().check_solution(user_input)
