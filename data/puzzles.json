@@ -2,52 +2,47 @@
   {
     "id": "GW-001",
     "type": "guess_word",
-    "description": "Guess the word: a large body of salt water.",
+    "description": "oc_an",
     "difficulty": 1,
     "max_attempts": 3,
     "points": 10,
-    "correct_answer": "ocean",
-    "allowed_variations": ["the ocean", "ocen", "ocan"]
+    "correct_answer": "ocean"
   },
   {
     "id": "GW-002",
     "type": "guess_word",
-    "description": "Guess the word: a device used to take photos.",
+    "description": "c_mera",
     "difficulty": 1,
     "max_attempts": 3,
     "points": 10,
-    "correct_answer": "camera",
-    "allowed_variations": ["the camera", "camra", "camer"]
+    "correct_answer": "camera"
   },
   {
     "id": "GW-003",
     "type": "guess_word",
-    "description": "Guess the word: the opposite of 'cold'.",
+    "description": "c_ld",
     "difficulty": 1,
     "max_attempts": 2,
     "points": 10,
-    "correct_answer": "hot",
-    "allowed_variations": ["warm"]
+    "correct_answer": "cold"
   },
   {
     "id": "GW-004",
     "type": "guess_word",
-    "description": "Guess the word: a place where books are borrowed.",
+    "description": "bo_k",
     "difficulty": 2,
     "max_attempts": 3,
     "points": 15,
-    "correct_answer": "library",
-    "allowed_variations": ["the library"]
+    "correct_answer": "book"
   },
   {
     "id": "GW-005",
     "type": "guess_word",
-    "description": "Guess the word: a fruit that keeps the doctor away.",
+    "description": "_pple",
     "difficulty": 2,
     "max_attempts": 3,
     "points": 15,
-    "correct_answer": "apple",
-    "allowed_variations": ["an apple"]
+    "correct_answer": "apple"
   },
 
   {
