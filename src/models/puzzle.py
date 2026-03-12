@@ -1,10 +1,32 @@
 """
 Defines the abstract Puzzle base class
+
+It defines some common attributes and methods for all puzzle types. 
+Subclasses must implement the abstract method `check_solution`.
+
+Attributes
+---------
+__id: int
+    Unique ID for the puzzle.
+__description: str
+    Description of the puzzle.
+__difficulty: int
+    Level of difficulty (1 - easy, 2 - medium, 3 - hard)
+__max_attempts: int
+    Maximum number of attempts allowed.
+__attempts_made: int
+    Number of attempts made so far.
+__points: int
+    Points for solving the puzzle 
+__is_solved: bool
+    Whether the puzzle has been solved.
 """
 
+# Make Puzzle class abstract. Subclasses must implement the abstract method 
 from abc import ABC, abstractmethod
 
 class Puzzle(ABC):
+    # Construct a Puzzle object
     def __init__(self, puzzle_id, description, difficulty, max_attempts, points, attempts_made=0, is_solved=False):
         self.__id = puzzle_id
         self.__description = description
@@ -14,8 +36,7 @@ class Puzzle(ABC):
         self.__points = points
         self.__is_solved = is_solved
 
-    # Getters    
-
+    # Getters for the puzzle attributes     
     def get_id(self):
         return self.__id
 
@@ -37,7 +58,7 @@ class Puzzle(ABC):
     def is_solved(self):
         return self.__is_solved
 
-    # Setters
+    # Setters 
     def set_description(self, description):
         self.__description = description
 
@@ -54,6 +75,8 @@ class Puzzle(ABC):
     def set_attempts_made(self, attempts_made):
         if attempts_made < 0:
             raise ValueError("Attempts made cannot be negative")
+        
+        # raise an error if attempts exceed maximum attempts
         elif attempts_made > self.__max_attempts:
             raise ValueError("Attempts made cannot exceed maximum attempts.")
         self.__attempts_made = attempts_made
@@ -67,11 +90,11 @@ class Puzzle(ABC):
     def set_solved(self, is_solved):
         self.__is_solved = is_solved
 
-    # Operator overloading 
+    # Operator overloading - compare puzzles based on their difficlty
     def __lt__(self, other):
         return self.__difficulty < other.__difficulty
     
-    # Abstract method 
+    # Abstract method to check if a solution is correct 
     @abstractmethod
     def check_solution(self, solution):
         pass
