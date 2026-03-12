@@ -7,7 +7,7 @@
     "max_attempts": 3,
     "points": 10,
     "correct_answer": "ocean",
-    "allowed_variations": ["the ocean"]
+    "allowed_variations": ["the ocean", "ocen", "ocan"]
   },
   {
     "id": "GW-002",
@@ -17,7 +17,7 @@
     "max_attempts": 3,
     "points": 10,
     "correct_answer": "camera",
-    "allowed_variations": ["the camera"]
+    "allowed_variations": ["the camera", "camra", "camer"]
   },
   {
     "id": "GW-003",
@@ -27,7 +27,7 @@
     "max_attempts": 2,
     "points": 10,
     "correct_answer": "hot",
-    "allowed_variations": []
+    "allowed_variations": ["warm"]
   },
   {
     "id": "GW-004",
