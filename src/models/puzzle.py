@@ -138,7 +138,7 @@ class Puzzle(ABC):
 
     def __eq__(self, other):
         """
-        Check if two EquationPuzzle instances are equal based on their ID and equation.
+        Check if two EquationPuzzle instances are equal based on their ID.
 
         Parameters
         ----------
@@ -152,7 +152,7 @@ class Puzzle(ABC):
         """
         if not isinstance(other, Puzzle):
             return False
-        return self.id == other.id and self.equation == other.equation
+        return self.id == other.id 
     
     @abstractmethod
     def check_solution(self, solution):

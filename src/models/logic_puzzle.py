@@ -19,7 +19,7 @@ class LogicPuzzle(MathPuzzle):
 
         Args 
         ----------
-        __explantion: str
+        __explanation: str
             The explanation for the solution of the puzzle.
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
@@ -45,13 +45,25 @@ class LogicPuzzle(MathPuzzle):
         bool
             True if the user's answer is correct, False otherwise.
         """
+        if self.solved:
+            return True
+
+        if self.attempts_made >= self.max_attempts:
+            raise ValueError("Maximum attempts reached. You cannot make more guesses.")
+
+        if not isinstance(user_input, str):
+            raise ValueError("Input must be a string.")
+
+        if not user_input.strip():
+            raise ValueError("Input cannot be empty.")
+
+        self.attempts_made += 1
         try:
             user_result = int(user_input)
         except ValueError:
             return False
-
-        self.set_attempts_made(self.get_attempts_made() + 1)
-        is_correct = user_result == self.get_correct_result()
+        
+        is_correct = user_result == self.correct_result
         if is_correct:
-            self.set_solved(True)
+            self.solved = True
         return is_correct

@@ -61,6 +61,7 @@ def load_puzzles(file_path):
                     points,
                     _require_field(entry, "correct_answer"),
                     entry.get("hints", []),
+                    entry.get("allowed_variations", []),
                 )
             )
         elif puzzle_type == "equation":
@@ -71,8 +72,8 @@ def load_puzzles(file_path):
                     difficulty,
                     max_attempts,
                     points,
-                    _require_field(entry, "correct_result"),
-                    _require_field(entry, "equation_expression"),
+                    equation=_require_field(entry, "equation_expression"),
+                    correct_result=_require_field(entry, "correct_result"),
                 )
             )
         elif puzzle_type == "logic":

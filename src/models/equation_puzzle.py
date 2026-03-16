@@ -22,8 +22,8 @@ class EquationPuzzle(MathPuzzle):
         ----------
         __equation: str
             The mathematical equation to be solved. (e.g. 2x = 5)
-        __tolarance: float
-            The tolerance for floating-point comparisson. 
+        __tolerance: float
+            The tolerance for floating-point comparison. 
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_result, attempts_made, is_solved)
@@ -54,13 +54,27 @@ class EquationPuzzle(MathPuzzle):
         bool
             True if the user's result is correct within the tolerance, False otherwise.
         """
+        if self.solved:
+            return True
+
+        if self.attempts_made >= self.max_attempts:
+            raise ValueError("Maximum attempts reached. You cannot make more guesses.")
+
+        if not isinstance(user_input, str):
+            raise ValueError("Input must be a string.")
+
+        if not user_input.strip():
+            raise ValueError("Input cannot be empty.")
+
+        # Count this attempt (regardless of correctness).
+        self.attempts_made += 1
+
         try:
             user_result = float(user_input)
-            # Compare user result to the correct result with allowed tolerance
-            self.set_attempts_made(self.get_attempts_made() + 1)
-            is_correct = math.isclose(user_result, self.get_correct_result(), rel_tol=self.__tolerance)
-            if is_correct:
-                self.set_solved(True)
-            return is_correct
         except ValueError:
             return False
+
+        is_correct = math.isclose(user_result, self.correct_result, rel_tol=self.__tolerance)
+        if is_correct:
+            self.solved = True
+        return is_correct
