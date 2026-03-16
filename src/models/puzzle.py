@@ -114,13 +114,45 @@ class Puzzle(ABC):
         """Sets whether the puzzle has been solved."""
         self.__is_solved = is_solved
 
-    def __lt__(self, other):
-        """Compare the puzzle's difficulty with the difficulty of another puzzle. """
-        return self.difficulty < other.difficulty
-
-    # Printing the puzzle
     def __str__(self):
+        """Prints the details of the puzzle."""
         return f"Puzzle {self.__id}: {self.__description} (Difficulty {self.__difficulty})"
+    
+    def __lt__(self, other):
+        """
+        Check if one the current EquationPuzzle is less difficult than other EquationPuzzle.
+
+        Parameters
+        ----------
+        other : EquationPuzzle
+            Another EquationPuzzle instance to compare with.
+
+        Returns
+        -------
+        bool
+            True if the puzzle is less difficult than the other puzzle, False otherwise.
+        """
+        if not isinstance(other, Puzzle):
+            return False
+        return self.difficulty < other.difficulty     
+
+    def __eq__(self, other):
+        """
+        Check if two EquationPuzzle instances are equal based on their ID and equation.
+
+        Parameters
+        ----------
+        other : EquationPuzzle
+            Another EquationPuzzle instance to compare with.
+
+        Returns
+        -------
+        bool
+            True if the puzzles are equal, False otherwise.
+        """
+        if not isinstance(other, Puzzle):
+            return False
+        return self.id == other.id and self.equation == other.equation
     
     @abstractmethod
     def check_solution(self, solution):

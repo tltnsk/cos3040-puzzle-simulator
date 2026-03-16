@@ -9,24 +9,26 @@ from .math_puzzle import MathPuzzle
 
 class LogicPuzzle(MathPuzzle):
     """
+    LogicPuzzle class 
     Puzzle that validates a numeric logical answer.
     """
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
                  points, correct_result, explanation, attempts_made=0, is_solved=False):
+        """
+        Initializes an equation-based puzzle.
+
+        Args 
+        ----------
+        __explantion: str
+            The explanation for the solution of the puzzle.
+        """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_result, attempts_made, is_solved)
         self.__explanation = explanation
 
-
-    def get_explanation(self):
-        """
-        Getter for the explanation of the correct answer.
-
-        Returns
-        -------
-        str
-            The explanation of the correct answer.
-        """
+    @property
+    def explanation(self):
+        """Returns the explanation for the correct answer as a string."""
         return self.__explanation
 
     def check_solution(self, user_input):

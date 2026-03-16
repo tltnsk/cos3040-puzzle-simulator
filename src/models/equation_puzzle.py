@@ -10,6 +10,7 @@ from .math_puzzle import MathPuzzle
 
 class EquationPuzzle(MathPuzzle):
     """
+    EquationPuzzle class
     Puzzle where the player solves a mathematical equation
     """
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
@@ -17,28 +18,27 @@ class EquationPuzzle(MathPuzzle):
         """
         Initializes an equation-based puzzle.
 
-        Parameters
+        Args 
         ----------
-        equation: str
+        __equation: str
             The mathematical equation to be solved. (e.g. 2x = 5)
-        correct_result: float
-            The precomputed correct result of the equation.
+        __tolarance: float
+            The tolerance for floating-point comparisson. 
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_result, attempts_made, is_solved)
         self.__equation = equation
-        self.__tolerance = tolerance  # Tolerance for floating-point comparison
+        self.__tolerance = tolerance  
 
-
-    def get_equation(self):
-        """
-        Getter for the equation to be solved.
-        Returns
-        -------
-        str
-            The equation as a string 
-        """
+    @property 
+    def equation(self):
+        """Return the equation to be solved as a string."""
         return self.__equation
+
+    @property 
+    def tolerance(self):
+        """Returns the toleerance for floating-point comparisson"""
+        return self.__tolerance 
 
     def check_solution(self, user_input):
         """
