@@ -4,10 +4,10 @@ Loading puzzles from a JSON file.
 
 import json
 
-from models.guess_word_puzzle import GuessWordPuzzle
-from models.riddle_puzzle import RiddlePuzzle
-from models.equation_puzzle import EquationPuzzle
-from models.logic_puzzle import LogicPuzzle
+from models.puzzles.guess_word_puzzle import GuessWordPuzzle
+from models.puzzles.riddle_puzzle import RiddlePuzzle
+from models.puzzles.equation_puzzle import EquationPuzzle
+from models.puzzles.logic_puzzle import LogicPuzzle
 
 
 def _require_field(entry, field_name):
