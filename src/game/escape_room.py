@@ -5,7 +5,6 @@ Runs the game and controls puzzle display and scoring.
 
 """
 
-import json
 from copy import deepcopy
 
 from models.player import Player
@@ -13,6 +12,7 @@ from models.puzzles.equation_puzzle import EquationPuzzle
 from models.puzzles.guess_word_puzzle import GuessWordPuzzle
 from models.puzzles.logic_puzzle import LogicPuzzle
 from models.puzzles.riddle_puzzle import RiddlePuzzle
+from utils.result_manager import append_result
 
 # Look up table for puzzle type labels.
 _PUZZLE_TYPE_LABELS = {
@@ -126,7 +126,7 @@ class EscapeRoom:
         print("\n--- Player registration ---")
         while True:
             name = input("Enter your name: ").strip()
-            if not isinstance(name, str) and name:
+            if not name:
                 print("Name must be a non-empty string.")
                 continue
             break
@@ -143,7 +143,8 @@ class EscapeRoom:
                 continue
             break
 
-        self.player = Player(name, age)
+        player = Player(name, age)
+        self.player = player
         print(f"\nWelcome, {player.name}!")
         return player
 
@@ -202,7 +203,7 @@ class EscapeRoom:
                 if not filtered:
                     print("Such type of puzzle does not exist. Try another.")
                     continue
-                return filtered
+                return deepcopy(filtered)
             print(f"Unknown type. Choose one of: {', '.join(_PUZZLE_TYPE_LABELS)}")
 
     def _choose_by_difficulty(self):
@@ -215,7 +216,7 @@ class EscapeRoom:
                 if not filtered:
                     print("No puzzles with that level of difficulty. Try another.")
                     continue
-                return filtered
+                return deepcopy(filtered)
             print("Please enter 1, 2, or 3.")
 
     def filter_puzzles_by_type(self, puzzle_type):
@@ -260,7 +261,71 @@ class EscapeRoom:
 
     def play_puzzle(self, puzzle):
         """Run the interaction loop for a single puzzle."""
-        raise NotImplementedError
+        if self.player is None:
+            raise ValueError("No player is set.")
+
+        # Ensure puzzles are playable even if reused.
+        try:
+            puzzle.solved = False
+            puzzle.attempts_made = 0
+        except Exception:
+            pass
+
+        puzzle_type = "Puzzle"
+        if isinstance(puzzle, GuessWordPuzzle):
+            puzzle_type = "Guess word"
+        elif isinstance(puzzle, RiddlePuzzle):
+            puzzle_type = "Riddle"
+        elif isinstance(puzzle, EquationPuzzle):
+            puzzle_type = "Equation"
+        elif isinstance(puzzle, LogicPuzzle):
+            puzzle_type = "Logic"
+
+        print(f"\n--- {puzzle_type} ({puzzle.id}) ---")
+        print(f"Difficulty: {puzzle.difficulty} | Points: {puzzle.points} | Attempts: {puzzle.max_attempts}")
+        print(puzzle.description)
+
+        if isinstance(puzzle, RiddlePuzzle):
+            print("Type 'hint' to get a hint (doesn't use an attempt).")
+
+        while not puzzle.solved and puzzle.attempts_made < puzzle.max_attempts:
+            if isinstance(puzzle, (EquationPuzzle, LogicPuzzle)):
+                prompt = "Your answer (number): "
+            else:
+                prompt = "Your answer: "
+
+            user_input = input(prompt).strip()
+
+            if isinstance(puzzle, RiddlePuzzle) and user_input.lower() == "hint":
+                hint = puzzle.use_hint()
+                if hint is None:
+                    print("No more hints.")
+                else:
+                    print(f"Hint: {hint}")
+                continue
+
+            try:
+                is_correct = puzzle.check_solution(user_input)
+            except ValueError as exc:
+                print(str(exc))
+                break
+
+            if is_correct:
+                print("Correct!")
+                self.update_score(puzzle.points)
+                print(f"Score: {self.player.score}")
+                return True
+
+            remaining = puzzle.max_attempts - puzzle.attempts_made
+            print(f"Incorrect. Attempts remaining: {remaining}")
+            if isinstance(puzzle, GuessWordPuzzle) and puzzle.incorrect_guesses:
+                last_few = puzzle.incorrect_guesses[-3:]
+                print(f"Incorrect guesses: {', '.join(last_few)}")
+
+        print("Puzzle not solved.")
+        if isinstance(puzzle, LogicPuzzle):
+            print(f"Explanation: {puzzle.explanation}")
+        return False
 
     def update_score(self, points):
         """Update the player's score when they solve a puzzle."""
@@ -270,4 +335,14 @@ class EscapeRoom:
 
     def save_results(self, file_path):
         """Save the player's results (id, name, score) to a file."""
-        raise NotImplementedError
+        if self.player is None:
+            raise ValueError("No player is set.")
+
+        append_result(
+            file_path,
+            {
+                "player_id": self.player.id,
+                "name": self.player.name,
+                "score": self.player.score,
+            }
+        )
