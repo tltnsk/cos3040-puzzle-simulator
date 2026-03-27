@@ -6,7 +6,8 @@ The player's answer is validated against the correct result.
 Tolerance for floating-point comparisons is also included.
 """
 import math
-from math_puzzle import MathPuzzle
+
+from .math_puzzle import MathPuzzle
 
 class EquationPuzzle(MathPuzzle):
     """

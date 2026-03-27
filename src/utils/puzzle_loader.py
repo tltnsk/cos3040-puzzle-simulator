@@ -9,8 +9,6 @@ from models.puzzles.riddle_puzzle import RiddlePuzzle
 from models.puzzles.equation_puzzle import EquationPuzzle
 from models.puzzles.logic_puzzle import LogicPuzzle
 
-
-
 def _require_field(entry, field_name):
     """
     Helper function to require a field in a JSON entry.
