@@ -49,11 +49,6 @@ From the project root:
 PYTHONPATH=src python3 src/main.py
 ```
 
-Optional (use a different config):
-```bash
-PYTHONPATH=src python3 src/main.py --config other.ini
-```
-
 ### 3) Playing the game
 - Use the menu to start.
 - Choose puzzles by type or difficulty.
