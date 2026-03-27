@@ -10,7 +10,25 @@ from models.puzzles.equation_puzzle import EquationPuzzle
 from models.puzzles.logic_puzzle import LogicPuzzle
 
 
+
 def _require_field(entry, field_name):
+    """
+    Helper function to require a field in a JSON entry.
+    Args:
+    ----------
+    entry: dict
+        The JSON entry to check.
+    field_name: str
+        The name of the field to check.
+
+    Returns:
+    ----------
+    The value of the field.
+
+    Raises:
+    ----------
+    KeyError: If the field is not found in the entry.
+    """
     if field_name not in entry:
         raise KeyError(f"Missing required field '{field_name}' in puzzle entry: {entry}")
     return entry[field_name]
