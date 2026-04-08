@@ -1,4 +1,4 @@
-import unittest
+from unittest import TestCase
 
 from src.models.puzzles.text_puzzle import TextPuzzle
 
@@ -8,7 +8,7 @@ class _ConcreteTextPuzzle(TextPuzzle):
         return user_input.strip().lower() == self.correct_answer.strip().lower()
 
 
-class TestTextPuzzleBase(unittest.TestCase):
+class TestTextPuzzleBase(TestCase):
     def setUp(self):
         self.p = _ConcreteTextPuzzle(
             "T-1",

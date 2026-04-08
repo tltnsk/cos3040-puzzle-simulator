@@ -1,10 +1,10 @@
-import unittest
+from unittest import TestCase
 
 
 from src.models.puzzles.equation_puzzle import EquationPuzzle
 
 
-class TestEquationPuzzle(unittest.TestCase):
+class TestEquationPuzzle(TestCase):
     def setUp(self):
         self.p = EquationPuzzle(
             "EQ-T1",

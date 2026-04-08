@@ -1,4 +1,4 @@
-import unittest
+from unittest import TestCase
 
 from src.models.puzzles.math_puzzle import MathPuzzle
 
@@ -11,7 +11,7 @@ class _ConcreteMathPuzzle(MathPuzzle):
             return False
 
 
-class TestMathPuzzleBase(unittest.TestCase):
+class TestMathPuzzleBase(TestCase):
     def setUp(self):
         self.p = _ConcreteMathPuzzle("M-1", "desc", 1, 1, 1, correct_result=2.5)
 

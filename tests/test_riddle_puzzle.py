@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 
 from src.models.puzzles.riddle_puzzle import RiddlePuzzle
 
 
-class TestRiddlePuzzle(unittest.TestCase):
+class TestRiddlePuzzle(TestCase):
     def setUp(self):
         self.p = RiddlePuzzle(
             "RD-T1",

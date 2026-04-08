@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 
 from src.models.puzzles.logic_puzzle import LogicPuzzle
 
 
-class TestLogicPuzzle(unittest.TestCase):
+class TestLogicPuzzle(TestCase):
     def setUp(self):
         self.p = LogicPuzzle(
             "LG-T1",

@@ -1,8 +1,8 @@
-import unittest
+from unittest import TestCase
 from src.models.puzzles.guess_word_puzzle import GuessWordPuzzle
 
 
-class TestGuessWordPuzzle(unittest.TestCase):
+class TestGuessWordPuzzle(TestCase):
     def setUp(self):
         self.p = GuessWordPuzzle(
             "GW-T1",
