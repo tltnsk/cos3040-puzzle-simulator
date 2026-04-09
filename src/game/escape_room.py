@@ -7,12 +7,12 @@ Runs the game and controls puzzle display and scoring.
 
 from copy import deepcopy
 
-from models.player import Player
-from models.puzzles.equation_puzzle import EquationPuzzle
-from models.puzzles.guess_word_puzzle import GuessWordPuzzle
-from models.puzzles.logic_puzzle import LogicPuzzle
-from models.puzzles.riddle_puzzle import RiddlePuzzle
-from utils.result_manager import append_result
+from src.models.player import Player
+from src.models.puzzles.equation_puzzle import EquationPuzzle
+from src.models.puzzles.guess_word_puzzle import GuessWordPuzzle
+from src.models.puzzles.logic_puzzle import LogicPuzzle
+from src.models.puzzles.riddle_puzzle import RiddlePuzzle
+from src.utils.result_manager import append_result
 
 # Look up table for puzzle type labels.
 _PUZZLE_TYPE_LABELS = {
