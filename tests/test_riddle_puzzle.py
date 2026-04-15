@@ -68,6 +68,9 @@ class TestRiddlePuzzle(TestCase):
     def test_check_solution_variation_case_insensitive(self):
         self.assertTrue(self.p.check_solution("A Piano"))
 
+    def test_check_solution_returns_true_if_already_solved(self):
+        self.p.check_solution("piano")   
+        self.assertTrue(self.p.check_solution("wrong answer"))  
     
     # Check solution: wrong answer
     def test_check_solution_wrong(self):
