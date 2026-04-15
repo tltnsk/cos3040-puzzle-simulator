@@ -2,20 +2,34 @@ from unittest import TestCase
 
 from src.models.puzzles.puzzle import Puzzle
 
-# Concrete subclass that implements check_solution 
-# so that the abstract Puzzle class can be instantiated and tested 
+# Small subclass so I can actually create a Puzzle object and 
+# test the parent class  
 class _ConcretePuzzle(Puzzle):
     def check_solution(self, solution):
         return bool(solution)
 
+# This subclass calls the base implementation so the test
+# can execute the abstract method body and verify it raises the expected error.
+class _SuperCallingPuzzle(Puzzle):
+    def check_solution(self, solution):
+        return super().check_solution(solution)
 
 class TestPuzzle(TestCase):
     def setUp(self):
+        # Valid puzzle instance 
         self.p = _ConcretePuzzle("P-1", "A test puzzle", 2, 3, 10)
 
     def test_puzzle_is_abstract(self):
         with self.assertRaises(TypeError):
             Puzzle("P-1", "desc", 1, 1, 1)
+
+    def test_base_check_solution_raises_not_implemented(self):
+        puzzle = _SuperCallingPuzzle("P-2", "desc", 1, 1, 1)
+
+        # Calling super() reaches Puzzle.check_solution(), which should raise
+        # NotImplementedError until a real subclass overrides the behavior.
+        with self.assertRaises(NotImplementedError):
+            puzzle.check_solution("answer")
 
     def test_id_property(self):
         self.assertEqual(self.p.id, "P-1")
