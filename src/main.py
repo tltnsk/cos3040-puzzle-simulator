@@ -7,9 +7,8 @@ Loads puzzles from a JSON file and starts the Escape Room game.
 import argparse
 import configparser
 from pathlib import Path
-from utils.puzzle_loader import load_puzzles
-from game.escape_room import EscapeRoom
-
+from src.utils.puzzle_loader import load_puzzles
+from src.game.escape_room import EscapeRoom
 
 def _load_paths_from_config(config_path):
     cfile = configparser.ConfigParser()

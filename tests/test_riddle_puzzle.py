@@ -132,4 +132,3 @@ class TestRiddlePuzzle(TestCase):
 
         with self.assertRaises(ValueError):
             p.check_solution("piano")
-

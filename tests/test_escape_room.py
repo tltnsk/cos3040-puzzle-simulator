@@ -49,7 +49,7 @@ class TestEscapeRoom(TestCase):
 
     @patch("builtins.input")
     def test_show_main_menu_returns_start(self, mock_input):
-        mock_input.side_effect = "1"
+        mock_input.return_value = "1"
 
         result = self.room.show_main_menu()
 
@@ -57,7 +57,7 @@ class TestEscapeRoom(TestCase):
 
     @patch("builtins.input")
     def test_show_main_menu_returns_instructions(self, mock_input):
-        mock_input.side_effect = "2"
+        mock_input.return_value = "2"
 
         result = self.room.show_main_menu()
 
@@ -65,7 +65,7 @@ class TestEscapeRoom(TestCase):
 
     @patch("builtins.input")
     def test_show_main_menu_returns_exits(self, mock_input):
-        mock_input.side_effect = "3"
+        mock_input.return_value = "3"
 
         result = self.room.show_main_menu()
 
@@ -244,6 +244,36 @@ class TestEscapeRoom(TestCase):
         result = self.room.filter_puzzles_by_difficulty(3)
         self.assertEqual(result, [])
 
+    @patch("builtins.print")
+    def test_show_instructions_prints_help_text(self, mock_print):
+        self.room._show_instructions()
+
+        mock_print.assert_called_once()
+        self.assertIn("--- Instructions ---", mock_print.call_args[0][0])
+
+    @patch("builtins.input")
+    def test_register_player_returns_player(self, mock_input):
+        mock_input.side_effect = ["Ana", "20"]
+
+        player = self.room.register_player()
+
+        self.assertEqual(player.name, "Ana")
+        self.assertEqual(player.age, 20)
+        self.assertEqual(self.room.player, player)
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_register_player_reprompts_invalid_values(self, mock_input, mock_print):
+        mock_input.side_effect = ["", "Ana", "abc", "-5", "21"]
+
+        player = self.room.register_player()
+
+        self.assertEqual(player.name, "Ana")
+        self.assertEqual(player.age, 21)
+        mock_print.assert_any_call("Name must be a non-empty string.")
+        mock_print.assert_any_call("Age must be a whole number.")
+        mock_print.assert_any_call("Age must be non-negative.")
+
     def test_update_score(self):
         self.room.player = Player("Ana", 20)
         self.room.update_score(10)
@@ -257,12 +287,127 @@ class TestEscapeRoom(TestCase):
         with self.assertRaises(ValueError):
             self.room.save_results("results.json")
 
-    def test_save_results(self):
+    @patch("src.game.escape_room.append_result")
+    def test_save_results(self, mock_append_result):
         self.room.player = Player("Ana", 20)
         self.room.update_score(10)
+
         self.room.save_results("test_results.json")
-        import json
-        with open("test_results.json") as f:
-            data = json.load(f)
-        self.assertEqual(data[-1]["name"], "Ana")
-        self.assertEqual(data[-1]["score"], 10)
+
+        mock_append_result.assert_called_once_with(
+            "test_results.json",
+            {
+                "player_id": self.room.player.id,
+                "name": "Ana",
+                "score": 10,
+            }
+        )
+
+    def test_play_puzzle_without_player_raises(self):
+        with self.assertRaises(ValueError):
+            self.room.play_puzzle(self.puzzles[0])
+
+    @patch("builtins.input")
+    def test_play_puzzle_riddle_hint_then_correct(self, mock_input):
+        self.room.player = Player("Ana", 20)
+        riddle = RiddlePuzzle("R1", "Riddle 1", 1, 3, 10, "piano", ["music"], [])
+        mock_input.side_effect = ["hint", "piano"]
+
+        result = self.room.play_puzzle(riddle)
+
+        self.assertTrue(result)
+        self.assertEqual(self.room.player.score, 10)
+        self.assertEqual(riddle.hints_used_count, 1)
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_play_puzzle_riddle_no_more_hints(self, mock_input, mock_print):
+        self.room.player = Player("Ana", 20)
+        riddle = RiddlePuzzle("R1", "Riddle 1", 1, 3, 10, "piano", [], [])
+        mock_input.side_effect = ["hint", "piano"]
+
+        result = self.room.play_puzzle(riddle)
+
+        self.assertTrue(result)
+        mock_print.assert_any_call("No more hints.")
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_play_puzzle_guess_word_shows_incorrect_guesses(self, mock_input, mock_print):
+        self.room.player = Player("Ana", 20)
+        puzzle = GuessWordPuzzle("G1", "_ppl_", 1, 3, 10, "apple", [])
+        mock_input.side_effect = ["grape", "melon", "berry"]
+
+        result = self.room.play_puzzle(puzzle)
+
+        self.assertFalse(result)
+        mock_print.assert_any_call("Incorrect guesses: grape")
+        mock_print.assert_any_call("Incorrect guesses: grape, melon")
+        mock_print.assert_any_call("Incorrect guesses: grape, melon, berry")
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_play_puzzle_logic_prints_explanation_on_failure(self, mock_input, mock_print):
+        self.room.player = Player("Ana", 20)
+        puzzle = LogicPuzzle("L1", "Logic", 1, 2, 10, 2, "Because there are two.")
+        mock_input.side_effect = ["1", "0"]
+
+        result = self.room.play_puzzle(puzzle)
+
+        self.assertFalse(result)
+        mock_print.assert_any_call("Explanation: Because there are two.")
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_play_puzzle_breaks_on_value_error(self, mock_input, mock_print):
+        self.room.player = Player("Ana", 20)
+        puzzle = EquationPuzzle("E1", "Equation", 1, 3, 10, "x=1", 1)
+        mock_input.side_effect = [""]
+
+        result = self.room.play_puzzle(puzzle)
+
+        self.assertFalse(result)
+        mock_print.assert_any_call("Input cannot be empty.")
+        mock_print.assert_any_call("Puzzle not solved.")
+
+    def test_start_game_exits_from_menu(self):
+        with patch.object(self.room, "show_main_menu", return_value="exit"), \
+             patch.object(self.room, "register_player") as mock_register, \
+             patch("builtins.print") as mock_print:
+            self.room.start_game()
+
+        mock_register.assert_not_called()
+        mock_print.assert_any_call("Goodbye!")
+
+    def test_start_game_shows_instructions_then_plays_and_saves(self):
+        self.room.player = Player("Ana", 20)
+
+        with patch.object(self.room, "show_main_menu", side_effect=["instructions", "start"]), \
+             patch.object(self.room, "_show_instructions") as mock_instructions, \
+             patch.object(self.room, "register_player", return_value=self.room.player) as mock_register, \
+             patch.object(self.room, "choose_puzzle_mode", return_value=[self.puzzles[0]]) as mock_choose, \
+             patch.object(self.room, "play_puzzle", return_value=True) as mock_play, \
+             patch.object(self.room, "save_results") as mock_save, \
+             patch("builtins.input", return_value="n"):
+            self.room.start_game("results.json")
+
+        mock_instructions.assert_called_once()
+        mock_register.assert_called_once()
+        mock_choose.assert_called_once()
+        mock_play.assert_called_once_with(self.puzzles[0])
+        mock_save.assert_called_once_with("results.json")
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_start_game_handles_empty_selection(self, mock_input, mock_print):
+        self.room.player = Player("Ana", 20)
+        mock_input.return_value = "n"
+
+        with patch.object(self.room, "show_main_menu", return_value="start"), \
+             patch.object(self.room, "register_player", return_value=self.room.player), \
+             patch.object(self.room, "choose_puzzle_mode", return_value=[]), \
+             patch.object(self.room, "play_puzzle") as mock_play:
+            self.room.start_game()
+
+        mock_play.assert_not_called()
+        mock_print.assert_any_call("No puzzles to play.")

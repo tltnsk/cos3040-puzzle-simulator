@@ -59,4 +59,3 @@ class TestPlayer(TestCase):
 
     def test_str_format(self):
         self.assertEqual(str(self.p), "Ana (ID: 1, Age: 20, Score: 0)")
-

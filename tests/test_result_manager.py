@@ -41,4 +41,3 @@ class TestResultManager(TestCase):
         results = load_results("test_results.json")
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]["id"], 2)
-
