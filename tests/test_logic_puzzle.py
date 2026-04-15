@@ -22,12 +22,21 @@ class TestLogicPuzzle(TestCase):
     def test_check_solution_correct_result(self):
         self.assertTrue(self.p.check_solution("2"))
 
+    # Check solution returns true after already solved
+    def test_check_solution_returns_true_if_already_solved(self):
+        self.p.check_solution("2")   
+        self.assertTrue(self.p.check_solution("4"))  
+
     # Check solution: incorrect result
     def test_check_solution_incorrect_result(self):
         self.assertFalse(self.p.check_solution("3"))
 
     def test_check_solution_non_integer(self):
         self.assertFalse(self.p.check_solution("two"))
+
+    def test_check_solution_non_string(self):
+        with self.assertRaises(ValueError):
+            self.p.check_solution(123)
 
     def test_check_solution_empty_string(self):
         with self.assertRaises(Exception):
