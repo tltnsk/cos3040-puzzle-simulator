@@ -48,6 +48,40 @@ class TestEscapeRoom(TestCase):
             self.room.player = "Invalid Player"
 
     @patch("builtins.input")
+    def test_show_main_menu_returns_start(self, mock_input):
+        mock_input.side_effect = "1"
+
+        result = self.room.show_main_menu()
+
+        self.assertEqual(result, "start")
+
+    @patch("builtins.input")
+    def test_show_main_menu_returns_instructions(self, mock_input):
+        mock_input.side_effect = "2"
+
+        result = self.room.show_main_menu()
+
+        self.assertEqual(result, "instructions")
+
+    @patch("builtins.input")
+    def test_show_main_menu_returns_exits(self, mock_input):
+        mock_input.side_effect = "3"
+
+        result = self.room.show_main_menu()
+
+        self.assertEqual(result, "exit")
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_show_main_menu_reprompts(self, mock_input, mock_print):
+        mock_input.side_effect = ["4", "1"]
+
+        result = self.room.show_main_menu()
+
+        self.assertEqual(result, "start")
+        mock_print.assert_any_call("Please enter 1, 2, or 3.")
+
+    @patch("builtins.input")
     def test_choose_puzzle_mode_by_type(self, mock_input):
         mock_input.side_effect = ["1", "riddle"]
 
