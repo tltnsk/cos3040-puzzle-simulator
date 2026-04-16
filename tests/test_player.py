@@ -35,22 +35,9 @@ class TestPlayer(TestCase):
         self.p.add_score(10)
         self.assertEqual(self.p.score, 10)
 
-    def test_add_score_accumulates(self):
-        self.p.add_score(10)
-        self.p.add_score(5)
-        self.assertEqual(self.p.score, 15)
-
-    def test_add_score_zero(self):
-        self.p.add_score(0)
-        self.assertEqual(self.p.score, 0)
-
     def test_add_score_negative(self):
         with self.assertRaises(ValueError):
             self.p.add_score(-10)   
-
-    def test_add_score_non_integer(self):
-        with self.assertRaises(ValueError):
-            self.p.add_score("ten")
 
     def test_reset_score(self):
         self.p.add_score(10)

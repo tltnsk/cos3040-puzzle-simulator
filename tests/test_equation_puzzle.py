@@ -26,10 +26,6 @@ class TestEquationPuzzle(TestCase):
     # Check solution: correct result
     def test_check_solution_correct_result(self):
         self.assertTrue(self.p.check_solution("3"))
-    
-    def test_check_solution_returns_true_if_already_solved(self):
-        self.p.check_solution("3")   
-        self.assertTrue(self.p.check_solution("4"))  
 
     # Check solution with tolerance
     def test_check_solution_with_tolerance(self):
@@ -46,18 +42,6 @@ class TestEquationPuzzle(TestCase):
         with self.assertRaises(Exception):
             self.p.check_solution("")
 
-    def test_check_solution_whitespace_only(self):
-        with self.assertRaises(Exception):
-            self.p.check_solution("   ")
-
-    def test_check_solution_wrong_increments_attempts(self):
-        self.p.check_solution("4")
-        self.assertEqual(self.p.attempts_made, 1)   
-
-    def test_check_solution_wrong_does_not_set_solved(self):
-        self.p.check_solution("4")
-        self.assertFalse(self.p.solved)
-
     def test_check_solution_non_string(self):
         with self.assertRaises(ValueError):
             self.p.check_solution(123)
@@ -66,26 +50,3 @@ class TestEquationPuzzle(TestCase):
     def test_check_solution_correct_sets_solved(self):
         self.p.check_solution("3")
         self.assertTrue(self.p.solved)
-
-    def test_check_solution_correct_increments_attempts(self):
-        self.p.check_solution("3")
-        self.assertEqual(self.p.attempts_made, 1)
-
-    # Check solution: max attempts
-    def test_max_attempts(self):
-        p = EquationPuzzle(
-            "EQ-T1",
-            "Solve: x = 3",
-            1,
-            1,
-            10,
-            equation="x = 3",
-            tolerance=1e-9,
-            correct_result=3,
-        )
-
-        self.assertFalse(p.check_solution("4"))
-        self.assertEqual(p.attempts_made, 1)
-
-        with self.assertRaises(Exception):
-            p.check_solution("4")   

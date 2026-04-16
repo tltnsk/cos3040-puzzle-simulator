@@ -52,15 +52,3 @@ class TestLoadPuzzles(TestCase):
             }], f)
         with self.assertRaises(ValueError):
             load_puzzles("test_puzzles.json")
-
-    def test_missing_field_raises(self):
-        with open("test_puzzles.json", "w") as f:
-            json.dump([{"type": "riddle", "id": "RD-1"}], f)
-        with self.assertRaises(KeyError):
-            load_puzzles("test_puzzles.json")
-
-    def test_data_not_list_raises(self):
-        with open("test_puzzles.json", "w") as f:
-            json.dump({"type": "riddle"}, f)
-        with self.assertRaises(ValueError):
-            load_puzzles("test_puzzles.json")

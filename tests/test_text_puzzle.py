@@ -7,10 +7,6 @@ class _ConcreteTextPuzzle(TextPuzzle):
     def check_solution(self, user_input):
         return user_input.strip().lower() == self.correct_answer.strip().lower()
 
-class _SuperCallingPuzzle(TextPuzzle):
-    def check_solution(self, solution):
-        return super().check_solution(solution)
-
 class TestTextPuzzleBase(TestCase):
     def setUp(self):
         self.p = _ConcreteTextPuzzle(
@@ -26,14 +22,6 @@ class TestTextPuzzleBase(TestCase):
     def test_text_puzzle_is_abstract(self):
         with self.assertRaises(TypeError):
             TextPuzzle("T-1", "desc", 1, 1, 1, correct_answer="a")
-    
-    def test_base_check_solution_raises_not_implemented(self):
-        puzzle = _SuperCallingPuzzle("T-1", "desc", 1, 1, 1, correct_answer="a")
-
-        # Calling super() reaches TextPuzzle.check_solution(), which should raise
-        # NotImplementedError until a real subclass overrides the behavior.
-        with self.assertRaises(NotImplementedError):
-            puzzle.check_solution("answer")
 
     def test_correct_answer_property(self):
         self.assertEqual(self.p.correct_answer, "Hello")

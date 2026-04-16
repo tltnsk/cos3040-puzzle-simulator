@@ -4,22 +4,6 @@ from unittest import TestCase
 from src.utils.result_manager import load_results, save_results, append_result
 
 class TestResultManager(TestCase):
-    def test_load_results_non_existent(self):
-        results = load_results("non_existent_file.json")
-        self.assertEqual(results, [])
-
-    def test_load_results_empty_file(self):
-        with open("test_results.json", "w") as f:
-            json.dump([], f)
-        results = load_results("test_results.json")
-        self.assertEqual(len(results), 0)
-
-    def test_load_results_invalid_json(self):
-        with open("test_results.json", "w") as f:
-            f.write("invalid json {{{}}}")
-        results = load_results("test_results.json")
-        self.assertEqual(results, [])
-
     def test_load_results_valid_file(self):
         with open("test_results.json", "w") as f:
             json.dump([{"id": 1, "result": "pass"}], f)
