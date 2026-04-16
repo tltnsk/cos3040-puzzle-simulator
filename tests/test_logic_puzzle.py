@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the LogicPuzzle
+"""
+
 from unittest import TestCase
 
 from src.models.puzzles.logic_puzzle import LogicPuzzle

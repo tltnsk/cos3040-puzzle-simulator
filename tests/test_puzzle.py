@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the base Puzzle class 
+"""
+
 from unittest import TestCase
 
 from src.models.puzzles.puzzle import Puzzle

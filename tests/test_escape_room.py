@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the EscapeRoom class
+"""
+
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -202,7 +206,6 @@ class TestEscapeRoom(TestCase):
         mock_append_result.assert_called_once_with(
             "test_results.json",
             {
-                "player_id": self.room.player.id,
                 "name": "Ana",
                 "score": 10,
             }
@@ -248,16 +251,16 @@ class TestEscapeRoom(TestCase):
 
     @patch("builtins.print")
     @patch("builtins.input")
-    def test_play_puzzle_breaks_on_value_error(self, mock_input, mock_print):
+    def test_play_puzzle_reprompts_on_empty_input(self, mock_input, mock_print):
         self.room.player = Player("Ana", 20)
         puzzle = EquationPuzzle("E1", "Equation", 1, 3, 10, "x=1", 1)
-        mock_input.side_effect = [""]
+        mock_input.side_effect = ["", "1"]
 
         result = self.room.play_puzzle(puzzle)
 
-        self.assertFalse(result)
+        self.assertTrue(result)
         mock_print.assert_any_call("Input cannot be empty.")
-        mock_print.assert_any_call("Puzzle not solved.")
+        self.assertEqual(self.room.player.score, 10)
 
     def test_start_game_exits_from_menu(self):
         with patch.object(self.room, "show_main_menu", return_value="exit"), \

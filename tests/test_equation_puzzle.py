@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the EquationPuzzle
+"""
+
 from unittest import TestCase
 
 

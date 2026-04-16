@@ -308,7 +308,7 @@ class EscapeRoom:
                 is_correct = puzzle.check_solution(user_input)
             except ValueError as exc:
                 print(str(exc))
-                break
+                continue
 
             if is_correct:
                 print("Correct!")
@@ -334,14 +334,13 @@ class EscapeRoom:
         self.player.add_score(points)
 
     def save_results(self, file_path):
-        """Save the player's results (id, name, score) to a file."""
+        """Save the player's results (name, score) to a file."""
         if self.player is None:
             raise ValueError("No player is set.")
 
         append_result(
             file_path,
             {
-                "player_id": self.player.id,
                 "name": self.player.name,
                 "score": self.player.score,
             }

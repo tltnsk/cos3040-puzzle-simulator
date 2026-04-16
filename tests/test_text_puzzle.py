@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the TextPuzzle class
+"""
+
 from unittest import TestCase
 
 from src.models.puzzles.text_puzzle import TextPuzzle

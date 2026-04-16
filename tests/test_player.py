@@ -1,10 +1,13 @@
+"""
+This file contains the unit tests for the Player class
+"""
+
 from unittest import TestCase
 
 from src.models.player import Player
 
 class TestPlayer(TestCase):
     def setUp(self):
-        Player._next_id = 0 
         self.p = Player("Ana", 20)
 
     def test_player_name(self):
@@ -12,10 +15,6 @@ class TestPlayer(TestCase):
 
     def test_player_age(self):
         self.assertEqual(self.p.age, 20)
-
-    def test_player_id(self):
-        self.assertIsInstance(self.p.id, int)
-        self.assertEqual(self.p.id, 1)
 
     def test_name_setter(self):
         for invalid in ("", "   ", 123, None):
@@ -45,4 +44,4 @@ class TestPlayer(TestCase):
         self.assertEqual(self.p.score, 0)
 
     def test_str_format(self):
-        self.assertEqual(str(self.p), "Ana (ID: 1, Age: 20, Score: 0)")
+        self.assertEqual(str(self.p), "Ana (Age: 20, Score: 0)")

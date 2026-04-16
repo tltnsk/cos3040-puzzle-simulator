@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the GuessWordPuzzle
+"""
+
 from unittest import TestCase
 from src.models.puzzles.guess_word_puzzle import GuessWordPuzzle
 

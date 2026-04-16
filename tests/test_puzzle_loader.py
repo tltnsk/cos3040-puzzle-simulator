@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the Puzzle Loader class 
+"""
+
 import json
 from unittest import TestCase
 

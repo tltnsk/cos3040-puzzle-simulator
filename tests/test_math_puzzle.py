@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the MathPuzzle
+"""
+
 from unittest import TestCase
 
 from src.models.puzzles.math_puzzle import MathPuzzle

@@ -1,3 +1,7 @@
+"""
+This file contains the unit tests for the RiddlePuzzle class
+"""
+
 from unittest import TestCase
 
 from src.models.puzzles.riddle_puzzle import RiddlePuzzle

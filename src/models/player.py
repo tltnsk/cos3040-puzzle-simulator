@@ -10,9 +10,6 @@ class Player:
     Represents a player in the puzzle simulator.
     """
 
-    # counter for generating a random ID 
-    _next_id = 0
-
     def __init__(self, name, age):
         """
         Create a new player.
@@ -24,17 +21,10 @@ class Player:
         __age : int
             Player age.
         """
-        Player._next_id += 1
-        self.__id = Player._next_id
         self.__score = 0
 
         self.name = name
         self.age = age
-
-    @property
-    def id(self):
-        """Return the player's ID."""
-        return self.__id
 
     @property
     def name(self):
@@ -87,4 +77,4 @@ class Player:
         self.__score = 0
 
     def __str__(self) -> str:
-        return f"{self.name} (ID: {self.id}, Age: {self.age}, Score: {self.score})"
+        return f"{self.name} (Age: {self.age}, Score: {self.score})"
