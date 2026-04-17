@@ -36,7 +36,7 @@ class Player:
         """Set the player's name."""
 
         # name must be a non-empty string
-        if not isinstance(name, str) or not name.strip():
+        if not isinstance(name, str) or name.strip() == "":
             raise ValueError("Player name must be a non-empty string.")
         self.__name = name.strip()
 

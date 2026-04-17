@@ -58,7 +58,11 @@ def main():
         return
 
     game = EscapeRoom(puzzles)
-    game.start_game(results_file_path=str(results_path) if results_path else None)
+    try:
+        game.start_game(results_file_path=str(results_path) if results_path else None)
+    except KeyboardInterrupt:
+        print("\nGame interrupted by user. Goodbye!")
+        return
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ Runs the game and controls puzzle display and scoring.
 """
 
 from copy import deepcopy
+import re
 
 from src.models.player import Player
 from src.models.puzzles.equation_puzzle import EquationPuzzle
@@ -128,6 +129,9 @@ class EscapeRoom:
             name = input("Enter your name: ").strip()
             if not name:
                 print("Name must be a non-empty string.")
+                continue
+            elif not re.match(r"[A-Z][a-z]+$", name):
+                print("Name must start with an uppercase letter followed by lowercase letters.")
                 continue
             break
 
