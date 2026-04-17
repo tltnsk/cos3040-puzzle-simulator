@@ -17,14 +17,30 @@ class EquationPuzzle(MathPuzzle):
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
                  points, equation, correct_result, tolerance=1e-9, attempts_made=0, is_solved=False):
         """
-        Initializes an equation-based puzzle.
+        Initialize an equation-based puzzle.
 
-        Args 
+        Parameters
         ----------
-        __equation: str
+        puzzle_id : str
+            Unique ID for the puzzle.
+        description : str
+            Puzzle description shown to the player.
+        difficulty : int
+            Puzzle difficulty level.
+        max_attempts : int
+            Maximum number of guesses allowed.
+        points : int
+            Points awarded for solving the puzzle.
+        equation : str
             The mathematical equation to be solved. (e.g. 2x = 5)
-        __tolerance: float
+        correct_result : float
+            The numeric result expected from the player.
+        tolerance : float, optional
             The tolerance for floating-point comparison. 
+        attempts_made : int, optional
+            Number of attempts already used.
+        is_solved : bool, optional
+            Whether the puzzle has already been solved.
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_result, attempts_made, is_solved)
@@ -38,7 +54,7 @@ class EquationPuzzle(MathPuzzle):
 
     @property 
     def tolerance(self):
-        """Returns the toleerance for floating-point comparisson"""
+        """Return the tolerance used for floating-point comparison."""
         return self.__tolerance 
 
     def check_solution(self, user_input):

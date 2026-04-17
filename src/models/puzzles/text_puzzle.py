@@ -16,14 +16,28 @@ class TextPuzzle(Puzzle, ABC):
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
                  points, correct_answer, allowed_variations=None, attempts_made=0, is_solved=False):
         """
-        Initializes a text-based puzzle.
-        Args
-        ----------
-        __correct_answer: str
-            The correct answer to the puzzle.
+        Initialize a text-based puzzle.
 
-        __allowed_variations: list
+        Parameters
+        ----------
+        puzzle_id : str
+            Unique ID for the puzzle.
+        description : str
+            Puzzle description shown to the player.
+        difficulty : int
+            Puzzle difficulty level.
+        max_attempts : int
+            Maximum number of guesses allowed.
+        points : int
+            Points awarded for solving the puzzle.
+        correct_answer : str
+            The correct answer to the puzzle.
+        allowed_variations : list, optional
             List of acceptable variations for the correct answer.
+        attempts_made : int, optional
+            Number of attempts already used.
+        is_solved : bool, optional
+            Whether the puzzle has already been solved.
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, attempts_made, is_solved)

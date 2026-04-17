@@ -121,8 +121,10 @@ class EscapeRoom:
         """
         Ask the user for player details (name, age) and create a Player.
 
-        Returns:
-            Player: The newly created player.
+        Returns
+        -------
+        Player
+            The newly created player.
         """
         print("\n--- Player registration ---")
         while True:
@@ -156,8 +158,10 @@ class EscapeRoom:
         """
         Display the main menu (start, instructions, exit).
 
-        Returns:
-            str: start, instructions, or exit
+        Returns
+        -------
+        str
+            `"start"`, `"instructions"`, or `"exit"`.
         """
         print("\n=== Escape Room — Main Menu ===")
         print("1) Start game")
@@ -227,8 +231,10 @@ class EscapeRoom:
         """
         Return puzzles filtered by type.
 
-        Args:
-            puzzle_type (str): 
+        Parameters
+        ----------
+        puzzle_type : str
+            Puzzle type entered by the player.
 
         Returns:
             list: Puzzles whose class matches the given type.
@@ -268,7 +274,7 @@ class EscapeRoom:
         if self.player is None:
             raise ValueError("No player is set.")
 
-        # Ensure puzzles are playable even if reused.
+        # Make sure puzzles are playable even if reused.
         try:
             puzzle.solved = False
             puzzle.attempts_made = 0
@@ -338,7 +344,14 @@ class EscapeRoom:
         self.player.add_score(points)
 
     def save_results(self, file_path):
-        """Save the player's results (name, score) to a file."""
+        """
+        Save the player's results to a file.
+
+        Parameters
+        ----------
+        file_path : str
+            Path to the results JSON file.
+        """
         if self.player is None:
             raise ValueError("No player is set.")
 

@@ -25,14 +25,30 @@ def load_results(file_path):
 
 
 def save_results(file_path, results):
-    """Write the full results list to a JSON file."""
+    """
+    Write the full results list to a JSON file.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the JSON results file.
+    results : list
+        Results to save.
+    """
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
 
 
 def append_result(file_path, result):
     """
-    Load the results, add the current result to them and save the results to the file.
+    Load the results, add one result, and save the updated list.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the JSON results file.
+    result : dict
+        Result entry to append.
     """
     results = load_results(file_path)
     results.append(result)

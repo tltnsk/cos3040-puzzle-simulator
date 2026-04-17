@@ -11,21 +11,24 @@ from src.models.puzzles.riddle_puzzle import RiddlePuzzle
 
 def _require_field(entry, field_name):
     """
-    Helper function to require a field in a JSON entry.
-    Args:
+    Return a required field from a puzzle JSON entry.
+
+    Parameters
     ----------
-    entry: dict
+    entry : dict
         The JSON entry to check.
-    field_name: str
+    field_name : str
         The name of the field to check.
 
-    Returns:
+    Returns
     ----------
-    The value of the field.
+    object
+        The value of the field.
 
-    Raises:
+    Raises
     ----------
-    KeyError: If the field is not found in the entry.
+    KeyError
+        If the field is not found in the entry.
     """
     if field_name not in entry:
         raise KeyError(f"Missing required field '{field_name}' in puzzle entry: {entry}")
@@ -38,6 +41,16 @@ def load_puzzles(file_path):
 
     Expected JSON structure: a list of objects, each with a 'type' field
     and the fields required by that puzzle type.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the JSON file containing puzzle definitions.
+
+    Returns
+    -------
+    list
+        A list of instantiated puzzle objects.
     """
     with open(file_path, "r", encoding="utf-8") as file:
         data = json.load(file)

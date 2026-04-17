@@ -14,11 +14,11 @@ class Player:
         """
         Create a new player.
 
-        Args
+        Parameters
         ----------
-        __name : str
+        name : str
             Player name.
-        __age : int
+        age : int
             Player age.
         """
         self.__score = 0
@@ -77,4 +77,5 @@ class Player:
         self.__score = 0
 
     def __str__(self) -> str:
+        """Return the player details as a readable string."""
         return f"{self.name} (Age: {self.age}, Score: {self.score})"

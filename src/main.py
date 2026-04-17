@@ -11,6 +11,19 @@ from src.utils.puzzle_loader import load_puzzles
 
 
 def _load_paths_from_config(config_path):
+    """
+    Read the configured file locations from the config file.
+
+    Parameters
+    ----------
+    config_path : Path
+        Path to the configuration file.
+
+    Returns
+    -------
+    tuple
+        The puzzles path, results path, and data directory.
+    """
     cfile = configparser.ConfigParser()
     read_files = cfile.read(str(config_path))
     if not read_files:
@@ -24,6 +37,7 @@ def _load_paths_from_config(config_path):
 
 
 def main():
+    """Load the config, puzzles, and start the game."""
     config_path = Path(__file__).resolve().parent.parent / "config.ini"
 
     try:

@@ -15,12 +15,28 @@ class LogicPuzzle(MathPuzzle):
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
                  points, correct_result, explanation, attempts_made=0, is_solved=False):
         """
-        Initializes an equation-based puzzle.
+        Initialize a logic puzzle.
 
-        Args 
+        Parameters
         ----------
-        __explanation: str
+        puzzle_id : str
+            Unique ID for the puzzle.
+        description : str
+            Puzzle description shown to the player.
+        difficulty : int
+            Puzzle difficulty level.
+        max_attempts : int
+            Maximum number of guesses allowed.
+        points : int
+            Points awarded for solving the puzzle.
+        correct_result : int
+            The expected numeric answer.
+        explanation : str
             The explanation for the solution of the puzzle.
+        attempts_made : int, optional
+            Number of attempts already used.
+        is_solved : bool, optional
+            Whether the puzzle has already been solved.
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_result, attempts_made, is_solved)
@@ -33,7 +49,7 @@ class LogicPuzzle(MathPuzzle):
 
     def check_solution(self, user_input):
         """
-        Check if the player's numeric answer is correct
+        Check if the player's numeric answer is correct.
 
         Parameters
         ----------

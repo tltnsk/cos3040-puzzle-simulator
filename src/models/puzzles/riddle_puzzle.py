@@ -16,14 +16,30 @@ class RiddlePuzzle(TextPuzzle):
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
                  points, correct_answer, hints, allowed_variations=None, attempts_made=0, is_solved=False):
         """
-        Initializes a riddle puzzle.
+        Initialize a riddle puzzle.
 
-        Args 
+        Parameters
         ----------
-        __hints: str
-            A list storing the hints for the riddle
-        __hints_used_count: int
-            Number of hints that have been used.
+        puzzle_id : str
+            Unique ID for the puzzle.
+        description : str
+            Puzzle description shown to the player.
+        difficulty : int
+            Puzzle difficulty level.
+        max_attempts : int
+            Maximum number of guesses allowed.
+        points : int
+            Points awarded for solving the puzzle.
+        correct_answer : str
+            The correct answer to the riddle.
+        hints : list
+            Hint messages shown one by one to the player.
+        allowed_variations : list, optional
+            Other accepted answers for the puzzle.
+        attempts_made : int, optional
+            Number of attempts already used.
+        is_solved : bool, optional
+            Whether the puzzle has already been solved.
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_answer, allowed_variations=allowed_variations, attempts_made=attempts_made, is_solved=is_solved)

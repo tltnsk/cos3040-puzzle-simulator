@@ -13,22 +13,23 @@ class Puzzle(ABC):
     """Puzzle class"""
     def __init__(self, puzzle_id, description, difficulty, max_attempts, points, attempts_made=0, is_solved=False):
         """
-        Initializes a Puzzle 
-        Args:
-        ---------
-        __id: int
+        Initialize a puzzle with its shared attributes.
+
+        Parameters
+        ----------
+        puzzle_id : str
             Unique ID for the puzzle.
-        __description: str
+        description : str
             Description of the puzzle.
-        __difficulty: int
+        difficulty : int
             Level of difficulty (1 - easy, 2 - medium, 3 - hard)
-        __max_attempts: int
+        max_attempts : int
             Maximum number of attempts allowed.
-        __attempts_made: int
-            Number of attempts made so far.
-        __points: int
+        points : int
             Points for solving the puzzle 
-        __is_solved: bool
+        attempts_made : int, optional
+            Number of attempts made so far.
+        is_solved : bool, optional
             Whether the puzzle has been solved or not
         """     
         self.__id = puzzle_id
@@ -115,7 +116,7 @@ class Puzzle(ABC):
         self.__is_solved = is_solved
 
     def __str__(self):
-        """Prints the details of the puzzle."""
+        """Return a readable summary of the puzzle."""
         return f"Puzzle {self.__id}: {self.__description} (Difficulty {self.__difficulty})"
     
     def __lt__(self, other):
@@ -157,18 +158,18 @@ class Puzzle(ABC):
     @abstractmethod
     def check_solution(self, solution):
         """
-        Checks if the provided solution is correct.
+        Check whether the provided solution is correct.
 
-        Method must be implemented by subclasses.       
+        This method must be implemented by subclasses.       
 
         Parameters
         ----------
-        solution 
+        solution : str
             The solution to check.
 
         Raises
         ------
         NotImplementedError
-        If the method is not implemented in a subclass.
+            If the method is not implemented in a subclass.
         """
         raise NotImplementedError("Subclasses must implement the 'check_solution' method.")

@@ -16,11 +16,26 @@ class MathPuzzle(Puzzle, ABC):
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
                  points, correct_result, attempts_made=0, is_solved=False):
         """
-        Initializes a math-based puzzle with a correct result.
-        Args
+        Initialize a numeric puzzle with its correct result.
+
+        Parameters
         ----------
-        __correct_result: float
+        puzzle_id : str
+            Unique ID for the puzzle.
+        description : str
+            Puzzle description shown to the player.
+        difficulty : int
+            Puzzle difficulty level.
+        max_attempts : int
+            Maximum number of guesses allowed.
+        points : int
+            Points awarded for solving the puzzle.
+        correct_result : float
             The correct result to the puzzle.
+        attempts_made : int, optional
+            Number of attempts already used.
+        is_solved : bool, optional
+            Whether the puzzle has already been solved.
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, attempts_made, is_solved)
@@ -28,7 +43,7 @@ class MathPuzzle(Puzzle, ABC):
 
     @property
     def correct_result(self):
-        """Return the correct result for the puzzle"""
+        """Return the correct result for the puzzle."""
         return self.__correct_result
 
     @abstractmethod
