@@ -1,10 +1,9 @@
 """
 Project entry point.
 
-Loads puzzles from a JSON file and starts the Escape Room game.
+Loads puzzles from the configured JSON file and starts the Escape Room game.
 """
 
-import argparse
 import configparser
 from pathlib import Path
 from src.game.escape_room import EscapeRoom
@@ -25,17 +24,7 @@ def _load_paths_from_config(config_path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Escape Room puzzle simulator")
-    parser.add_argument(
-        "--config",
-        default="config.ini",
-        help="Path to config file (default: config.ini)",
-    )
-    args = parser.parse_args()
-
-    config_path = Path(args.config)
-    if not config_path.is_absolute():
-        config_path = Path(__file__).resolve().parent.parent / config_path
+    config_path = Path(__file__).resolve().parent.parent / "config.ini"
 
     try:
         puzzles_path, results_path, data_dir = _load_paths_from_config(config_path)
