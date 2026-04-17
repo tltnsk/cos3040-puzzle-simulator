@@ -41,18 +41,18 @@ class TextPuzzle(Puzzle, ABC):
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, attempts_made, is_solved)
-        self.__correct_answer = correct_answer
-        self.__allowed_variations = allowed_variations or []
+        self._correct_answer = correct_answer
+        self._allowed_variations = allowed_variations or []
 
     @property
     def correct_answer(self):
         """Return the correct answer for the puzzle."""
-        return self.__correct_answer
+        return self._correct_answer
     
     @property 
     def allowed_variations(self):
         """Returns a list of acceptable variations for the correct answer."""
-        return self.__allowed_variations
+        return self._allowed_variations
 
     @abstractmethod
     def check_solution(self, user_input):

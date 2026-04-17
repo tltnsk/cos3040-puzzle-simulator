@@ -39,12 +39,12 @@ class MathPuzzle(Puzzle, ABC):
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, attempts_made, is_solved)
-        self.__correct_result = correct_result
+        self._correct_result = correct_result
 
     @property
     def correct_result(self):
         """Return the correct result for the puzzle."""
-        return self.__correct_result
+        return self._correct_result
 
     @abstractmethod
     def check_solution(self, user_input):

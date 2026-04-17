@@ -44,18 +44,18 @@ class EquationPuzzle(MathPuzzle):
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_result, attempts_made, is_solved)
-        self.__equation = equation
-        self.__tolerance = tolerance  
+        self._equation = equation
+        self._tolerance = tolerance  
 
     @property 
     def equation(self):
         """Return the equation to be solved as a string."""
-        return self.__equation
+        return self._equation
 
     @property 
     def tolerance(self):
         """Return the tolerance used for floating-point comparison."""
-        return self.__tolerance 
+        return self._tolerance 
 
     def check_solution(self, user_input):
         """
@@ -91,7 +91,7 @@ class EquationPuzzle(MathPuzzle):
         except ValueError:
             return False
 
-        is_correct = math.isclose(user_result, self.correct_result, rel_tol=self.__tolerance)
+        is_correct = math.isclose(user_result, self.correct_result, rel_tol=self._tolerance)
         if is_correct:
             self.solved = True
         return is_correct

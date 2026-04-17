@@ -44,18 +44,18 @@ class RiddlePuzzle(TextPuzzle):
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_answer, allowed_variations=allowed_variations, attempts_made=attempts_made, is_solved=is_solved)
         
-        self.__hints = hints
-        self.__hints_used_count = 0
+        self._hints = hints
+        self._hints_used_count = 0
 
     @property 
     def hints(self):
         """Returns the list of hints for the riddle."""
-        return self.__hints
+        return self._hints
     
     @property
     def hints_used_count(self):
         """Return the number of hints used so far."""
-        return self.__hints_used_count
+        return self._hints_used_count
     
     def use_hint(self):
         """
@@ -67,9 +67,9 @@ class RiddlePuzzle(TextPuzzle):
         str or None
             The next hint, or None if no hints are available.
         """
-        if self.__hints_used_count < len(self.__hints):
-            hint = self.__hints[self.__hints_used_count]
-            self.__hints_used_count += 1
+        if self._hints_used_count < len(self._hints):
+            hint = self._hints[self._hints_used_count]
+            self._hints_used_count += 1
             return hint
         return None
 

@@ -41,12 +41,12 @@ class GuessWordPuzzle(TextPuzzle):
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_answer, allowed_variations, attempts_made, is_solved)
-        self.__incorrect_guesses = []
+        self._incorrect_guesses = []
 
     @property
     def incorrect_guesses(self):
         """Returns a list of incorrect guesses made by the player."""
-        return self.__incorrect_guesses
+        return self._incorrect_guesses
     
     def add_incorrect_guess(self, guess):
         """
@@ -57,7 +57,7 @@ class GuessWordPuzzle(TextPuzzle):
         guess : str
             The player's incorrect guess.
         """
-        self.__incorrect_guesses.append(guess)
+        self._incorrect_guesses.append(guess)
     
     def check_solution(self, user_input):
         """

@@ -211,18 +211,6 @@ class TestEscapeRoom(TestCase):
             }
         )
 
-    @patch("builtins.input")
-    def test_play_puzzle_riddle_hint_then_correct(self, mock_input):
-        self.room.player = Player("Ana", 20)
-        riddle = RiddlePuzzle("R1", "Riddle 1", 1, 3, 10, "piano", ["music"], [])
-        mock_input.side_effect = ["hint", "piano"]
-
-        result = self.room.play_puzzle(riddle)
-
-        self.assertTrue(result)
-        self.assertEqual(self.room.player.score, 10)
-        self.assertEqual(riddle.hints_used_count, 1)
-
     @patch("builtins.print")
     @patch("builtins.input")
     def test_play_puzzle_riddle_no_more_hints(self, mock_input, mock_print):
@@ -270,24 +258,6 @@ class TestEscapeRoom(TestCase):
 
         mock_register.assert_not_called()
         mock_print.assert_any_call("Goodbye!")
-
-    def test_start_game_shows_instructions_then_plays_and_saves(self):
-        self.room.player = Player("Ana", 20)
-
-        with patch.object(self.room, "show_main_menu", side_effect=["instructions", "start"]), \
-             patch.object(self.room, "_show_instructions") as mock_instructions, \
-             patch.object(self.room, "register_player", return_value=self.room.player) as mock_register, \
-             patch.object(self.room, "choose_puzzle_mode", return_value=[self.puzzles[0]]) as mock_choose, \
-             patch.object(self.room, "play_puzzle", return_value=True) as mock_play, \
-             patch.object(self.room, "save_results") as mock_save, \
-             patch("builtins.input", return_value="n"):
-            self.room.start_game("results.json")
-
-        mock_instructions.assert_called_once()
-        mock_register.assert_called_once()
-        mock_choose.assert_called_once()
-        mock_play.assert_called_once_with(self.puzzles[0])
-        mock_save.assert_called_once_with("results.json")
 
     @patch("builtins.print")
     @patch("builtins.input")

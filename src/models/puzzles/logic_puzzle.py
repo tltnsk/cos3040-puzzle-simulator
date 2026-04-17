@@ -40,12 +40,12 @@ class LogicPuzzle(MathPuzzle):
         """
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_result, attempts_made, is_solved)
-        self.__explanation = explanation
+        self._explanation = explanation
 
     @property
     def explanation(self):
         """Returns the explanation for the correct answer as a string."""
-        return self.__explanation
+        return self._explanation
 
     def check_solution(self, user_input):
         """
