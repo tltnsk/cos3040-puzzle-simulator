@@ -1,9 +1,8 @@
 """
-Defines the RiddlePuzzle class
+Riddle puzzle class.
 
-This class is a puzzle which requires the player to guess the solution of a riddle.
-The answer needs to be a string.
-The player's answer is validated against the correct answer.
+Represents text-answer riddles, supports accepted answer variations, and
+provides hints.
 """
 
 from .text_puzzle import TextPuzzle

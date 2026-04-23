@@ -1,6 +1,5 @@
-"""
-This file contains the unit tests for the LogicPuzzle
-"""
+# Unit tests for LogicPuzzle behavior.
+
 
 from unittest import TestCase
 
@@ -40,3 +39,22 @@ class TestLogicPuzzle(TestCase):
     def test_check_solution_empty_string(self):
         with self.assertRaises(Exception):
             self.p.check_solution("")
+
+    def test_check_solution_returns_true_when_solved(self):
+        self.p.check_solution("2")
+        self.assertTrue(self.p.check_solution("4"))
+
+    def test_max_attempts(self):
+        p = LogicPuzzle(
+            "LG-T1",
+            "How many truth values exist?",
+            1,
+            1,
+            10,
+            correct_result=2,
+            explanation="True and false.",
+        )
+
+        self.assertFalse(p.check_solution("4"))
+        with self.assertRaises(ValueError):
+            p.check_solution("4")

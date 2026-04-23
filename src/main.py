@@ -1,7 +1,8 @@
 """
-Project entry point.
+Project entry point for the puzzle simulator.
 
-Loads puzzles from the configured JSON file and starts the Escape Room game.
+Reads file paths from the configuration, loads puzzle definitions, and starts
+the Escape Room gameplay.
 """
 
 import configparser
@@ -64,7 +65,7 @@ def main():
     try:
         game.start_game(results_file_path=str(results_path) if results_path else None)
     except KeyboardInterrupt:
-        print("\nGame interrupted by user. Goodbye!")
+        print("\nGame interrupted by user.")
         return
 
 

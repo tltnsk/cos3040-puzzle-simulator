@@ -1,9 +1,8 @@
 """
-Defines the EquationPuzzle class.
+Equation puzzle class.
 
-This class represents a puzzle where the player solves a mathematical equation. 
-The player's answer is validated against the correct result.
-Tolerance for floating-point comparisons is also included.
+Represents puzzles that expect a numeric solution to an equation and validates
+player input using floating-point tolerance.
 """
 import math
 

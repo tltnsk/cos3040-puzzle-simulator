@@ -1,6 +1,5 @@
-"""
-This file contains the unit tests for the base Puzzle class 
-"""
+# Unit tests for the abstract Puzzle base class.
+
 
 from unittest import TestCase
 

@@ -1,6 +1,5 @@
-"""
-This file contains the unit tests for the GuessWordPuzzle
-"""
+# Unit tests for GuessWordPuzzle behavior.
+
 
 from unittest import TestCase
 from src.models.puzzles.guess_word_puzzle import GuessWordPuzzle
@@ -62,6 +61,21 @@ class TestGuessWordPuzzle(TestCase):
         with self.assertRaises(ValueError):
             self.p.check_solution("")
 
-    def test_check_solution_whitespace_only_raises(self):
+    def test_check_solution_returns_true_when_solved(self):
+        self.p.check_solution("apple")
+        self.assertTrue(self.p.check_solution("apples"))
+
+    def test_max_attempts(self):
+        p = GuessWordPuzzle(
+            "GW-T1",
+            "_ppl_",
+            1,
+            1,
+            10,
+            correct_answer="apple",
+            allowed_variations=["an apple"],
+        )
+
+        self.assertFalse(p.check_solution("banana"))
         with self.assertRaises(ValueError):
-            self.p.check_solution("   ")
+            p.check_solution("apple")

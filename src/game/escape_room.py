@@ -1,8 +1,7 @@
 """
-Defines the EscapeRoom class.
+This class represents the game controller.
 
-Runs the game and controls puzzle display and scoring.
-
+It handles menu flow, player registration, puzzle selection, gameplay, and scoring.
 """
 
 from copy import deepcopy
@@ -45,26 +44,26 @@ class EscapeRoom:
     @property
     def puzzles(self):
         """Returns the puzzles in the escape room."""
-        return self.__puzzles
+        return self._puzzles
 
     @puzzles.setter
     def puzzles(self, puzzles):
         """Sets the puzzles for the escape room."""
         if puzzles is None:
             raise ValueError("Puzzles cannot be None.")
-        self.__puzzles = deepcopy(puzzles)
+        self._puzzles = deepcopy(puzzles)
 
     @property
     def player(self):
         """Returns the current player."""
-        return self.__player
+        return self._player
 
     @player.setter
     def player(self, player):
         """Sets the current player."""
         if player is not None and not isinstance(player, Player):
             raise ValueError("Not an instance of Player class.")
-        self.__player = player
+        self._player = player
 
     def start_game(self, results_file_path=None):
         """

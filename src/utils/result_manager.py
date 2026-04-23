@@ -1,7 +1,7 @@
 """
-Result manager helpers.
+Result storage helpers.
 
-Loads the results from the file and also writes results to the file.
+Loads, saves, and appends game results stored as JSON lists.
 """
 
 import json

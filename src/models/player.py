@@ -1,7 +1,7 @@
 """
-Defines the Player class.
+This is the player class for the puzzle simulator.
 
-The Player stores basic user information and user's score.
+Stores player details and manages score updates during gameplay.
 """
 
 class Player:
@@ -21,7 +21,7 @@ class Player:
         age : int
             Player age.
         """
-        self.__score = 0
+        self._score = 0
 
         self.name = name
         self.age = age
@@ -29,7 +29,7 @@ class Player:
     @property
     def name(self):
         """Return the player's name."""
-        return self.__name
+        return self._name
 
     @name.setter
     def name(self, name):
@@ -38,12 +38,12 @@ class Player:
         # name must be a non-empty string
         if not isinstance(name, str) or name.strip() == "":
             raise ValueError("Player name must be a non-empty string.")
-        self.__name = name.strip()
+        self._name = name.strip()
 
     @property
     def age(self):
         """Return the player's age."""
-        return self.__age
+        return self._age
 
     @age.setter
     def age(self, age):
@@ -52,12 +52,12 @@ class Player:
         # must be an integer greater than 0
         if not isinstance(age, int) or age < 0:
             raise ValueError("Player age must be a non-negative integer.")
-        self.__age = age
+        self._age = age
 
     @property
     def score(self):
         """Return the player's score."""
-        return self.__score
+        return self._score
 
     def add_score(self, points):
         """
@@ -70,11 +70,11 @@ class Player:
         """
         if not isinstance(points, int) or points < 0:
             raise ValueError("Points must be a non-negative integer.")
-        self.__score += points
+        self._score += points
 
     def reset_score(self):
         """Reset the player's score to 0."""
-        self.__score = 0
+        self._score = 0
 
     def __str__(self) -> str:
         """Return the player details as a readable string."""

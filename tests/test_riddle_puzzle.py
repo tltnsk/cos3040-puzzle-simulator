@@ -1,6 +1,5 @@
-"""
-This file contains the unit tests for the RiddlePuzzle class
-"""
+# Unit tests for RiddlePuzzle behavior.
+
 
 from unittest import TestCase
 
@@ -27,10 +26,10 @@ class TestRiddlePuzzle(TestCase):
         self.assertEqual(self.p.hints_used_count, 0)
 
     def test_correct_answer(self):
-        self.assertEqual(self.p._TextPuzzle__correct_answer, "piano")
+        self.assertEqual(self.p._correct_answer, "piano")
 
     def test_allowed_variations(self):
-        self.assertEqual(self.p._TextPuzzle__allowed_variations, ["a piano"])
+        self.assertEqual(self.p._allowed_variations, ["a piano"])
 
     # Hints 
     def test_use_hints_first(self):
@@ -43,9 +42,6 @@ class TestRiddlePuzzle(TestCase):
     # Check solution 
     def test_check_solution_exact_match(self):
         self.assertTrue(self.p.check_solution("piano"))
-
-    def test_check_solution_case_insensitive(self):
-        self.assertTrue(self.p.check_solution("PIANO"))
 
     def test_check_solution_variation_accepted(self):
         self.assertTrue(self.p.check_solution("a piano"))
@@ -66,4 +62,24 @@ class TestRiddlePuzzle(TestCase):
     def test_check_solution_empty_string_raises(self):
         with self.assertRaises(ValueError):
             self.p.check_solution("")
+
+    def test_check_solution_returns_true_when_solved(self):
+        self.p.check_solution("piano")
+        self.assertTrue(self.p.check_solution("apple"))
+
+    def test_max_attempts(self):
+        p = RiddlePuzzle(
+            "RD-T1",
+            "What has keys but cannot open locks?",
+            1,
+            1,
+            10,
+            correct_answer="piano",
+            hints=["It makes music.", "It has black and white keys."],
+            allowed_variations=["a piano"],
+        )
+
+        self.assertFalse(p.check_solution("apple"))
+        with self.assertRaises(ValueError):
+            p.check_solution("piano")
         

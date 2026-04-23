@@ -1,9 +1,8 @@
 """
-Defines the MathPuzzle class - puzzle where the required answer is a mathematical result.
+Abstract base class for numeric puzzle types.
 
-It extends the base Puzzle class. 
-Defines a correct result. 
-
+Extends Puzzle with a stored numeric result that subclasses validate against
+their own answer-checking rules.
 """
 from abc import ABC, abstractmethod
 from .puzzle import Puzzle

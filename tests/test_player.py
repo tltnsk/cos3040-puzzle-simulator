@@ -1,6 +1,5 @@
-"""
-This file contains the unit tests for the Player class
-"""
+# Unit tests for the Player model.
+
 
 from unittest import TestCase
 

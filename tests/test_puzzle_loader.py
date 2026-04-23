@@ -1,6 +1,4 @@
-"""
-This file contains the unit tests for the Puzzle Loader class 
-"""
+# Unit tests for loading puzzle definitions from JSON.
 
 import json
 from unittest import TestCase
@@ -54,5 +52,14 @@ class TestLoadPuzzles(TestCase):
                 "type": "unknown", "id": "X-1", "description": "?",
                 "difficulty": 1, "max_attempts": 3, "points": 10
             }], f)
+        with self.assertRaises(ValueError):
+            load_puzzles("test_puzzles.json")
+
+    def test_data_not_list(self):
+        with open("test_puzzles.json", "w") as f:
+            json.dump({
+                "type": "unknown", "id": "X-1", "description": "?",
+                "difficulty": 1, "max_attempts": 3, "points": 10
+            }, f)
         with self.assertRaises(ValueError):
             load_puzzles("test_puzzles.json")

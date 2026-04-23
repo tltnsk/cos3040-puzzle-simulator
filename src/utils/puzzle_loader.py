@@ -1,5 +1,8 @@
 """
-Loading puzzles from a JSON file.
+Puzzle loading utilities.
+
+Reads puzzle definitions from JSON, validates required fields, and creates the
+appropriate puzzle objects for the game.
 """
 
 import json

@@ -1,6 +1,5 @@
-"""
-This file contains the unit tests for the TextPuzzle class
-"""
+# Unit tests for the abstract TextPuzzle base class.
+
 
 from unittest import TestCase
 
@@ -36,4 +35,4 @@ class TestTextPuzzleBase(TestCase):
     def test_allowed_variations_default_to_empty_list(self):
         p = _ConcreteTextPuzzle("T-2", "desc", 1, 1, 1, correct_answer="Hello")
         self.assertEqual(p.allowed_variations, [])
-        self.assertEqual(p._TextPuzzle__allowed_variations, [])
+        self.assertEqual(p._allowed_variations, [])

@@ -1,6 +1,5 @@
-"""
-This file contains the unit tests for the EscapeRoom class
-"""
+# Unit tests for EscapeRoom game flow and helpers.
+
 
 from unittest import TestCase
 from unittest.mock import patch
@@ -60,6 +59,32 @@ class TestEscapeRoom(TestCase):
         self.assertEqual(result, "start")
 
     @patch("builtins.input")
+    def test_show_main_menu_returns_instructions(self, mock_input):
+        mock_input.return_value = "2"
+
+        result = self.room.show_main_menu()
+
+        self.assertEqual(result, "instructions")
+
+    @patch("builtins.input")
+    def test_show_main_menu_returns_exit(self, mock_input):
+        mock_input.return_value = "3"
+
+        result = self.room.show_main_menu()
+
+        self.assertEqual(result, "exit")
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_show_main_menu_reprompts(self, mock_input, mock_print):
+        mock_input.side_effect = ["4", "1"]
+
+        result = self.room.show_main_menu()
+
+        self.assertEqual(result, "start")
+        mock_print.assert_any_call("Please enter 1, 2, or 3.")
+
+    @patch("builtins.input")
     def test_choose_puzzle_mode_by_type(self, mock_input):
         mock_input.side_effect = ["1", "riddle"]
 
@@ -81,6 +106,19 @@ class TestEscapeRoom(TestCase):
         puzzles = [
             RiddlePuzzle("R1", "Riddle 1", 1, 3, 10, "piano", [], []),
             GuessWordPuzzle("G1", "_ppl_", 2, 3, 10, "apple", []),
+        ]
+        room = EscapeRoom(puzzles)
+
+        result = room.choose_puzzle_mode()
+
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].difficulty, 1)
+
+    @patch("builtins.input")
+    def test_choose_puzzle_mode_invalid(self, mock_input):
+        mock_input.side_effect = ["7", "2", "1"]
+        puzzles = [
+            RiddlePuzzle("R1", "Riddle 1", 1, 3, 10, "piano", [], []),
         ]
         room = EscapeRoom(puzzles)
 
@@ -120,6 +158,44 @@ class TestEscapeRoom(TestCase):
         self.assertEqual(len(result), 1)
         self.assertIsInstance(result[0], RiddlePuzzle)
         mock_print.assert_any_call("Unknown type. Choose one of: guess_word, riddle, equation, logic")
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_choose_by_type_reprompts_when_no_puzzles_for_that_type(self, mock_input, mock_print):
+        mock_input.side_effect = ["logic", "riddle"]
+
+        puzzles = [
+            RiddlePuzzle("R1", "Riddle 1", 1, 3, 10, "piano", [], []),
+            GuessWordPuzzle("G1", "_ppl_", 1, 3, 10, correct_answer="apple", allowed_variations=[]),
+        ]
+
+        room = EscapeRoom(puzzles)
+
+        result = room._choose_by_type()
+
+        mock_print.assert_any_call("Such type of puzzle does not exist. Try another.")
+
+        self.assertEqual(len(result), 1)
+        self.assertIsInstance(result[0], RiddlePuzzle)
+
+    @patch("builtins.print")
+    @patch("builtins.input")
+    def test_choose_by_difficulty_reprompts_when_no_puzzles_for_that_level(self, mock_input, mock_print):
+        mock_input.side_effect = ["3", "1"]
+
+        puzzles = [
+            RiddlePuzzle("R1", "Riddle 1", 1, 3, 10, "piano", [], []),
+            RiddlePuzzle("R2", "Riddle 2", 2, 3, 10, "clock", [], []),
+        ]
+
+        room = EscapeRoom(puzzles)
+
+        result = room._choose_by_difficulty()
+
+        mock_print.assert_any_call("No puzzles with that level of difficulty. Try another.")
+
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].difficulty, 1)
 
     @patch("builtins.input")
     def test_choose_by_difficulty_returns_mathing_puzzles(self, mock_input):
@@ -187,6 +263,20 @@ class TestEscapeRoom(TestCase):
         self.assertEqual(player.age, 20)
         self.assertEqual(self.room.player, player)
 
+    @patch("builtins.input")
+    @patch("builtins.print")
+    def test_register_player_reprompts(self, mock_print, mock_input):
+        mock_input.side_effect = ["", "Ana", "abc", "-5", "21"]
+
+        player = self.room.register_player()
+
+        self.assertEqual(player.name, "Ana")
+        self.assertEqual(player.age, 21)
+
+        mock_print.assert_any_call("Name must be a non-empty string.")
+        mock_print.assert_any_call("Age must be a whole number.")
+        mock_print.assert_any_call("Age must be non-negative.")
+
     def test_update_score(self):
         self.room.player = Player("Ana", 20)
         self.room.update_score(10)
@@ -210,6 +300,10 @@ class TestEscapeRoom(TestCase):
                 "score": 10,
             }
         )
+
+    def test_save_results_no_player(self):
+        with self.assertRaises(ValueError):
+            self.room.save_results("results.json")
 
     @patch("builtins.print")
     @patch("builtins.input")
@@ -249,6 +343,16 @@ class TestEscapeRoom(TestCase):
         self.assertTrue(result)
         mock_print.assert_any_call("Input cannot be empty.")
         self.assertEqual(self.room.player.score, 10)
+
+    @patch("builtins.input")
+    def test_play_puzzle_logic_runs(self, mock_input):
+        self.room.player = Player("Ana", 20)
+        puzzle = LogicPuzzle("L1", "Logic", 1, 2, 10, 2, "True/False")
+        mock_input.return_value = "2"
+
+        result = self.room.play_puzzle(puzzle)
+
+        self.assertTrue(result)
 
     def test_start_game_exits_from_menu(self):
         with patch.object(self.room, "show_main_menu", return_value="exit"), \

@@ -1,6 +1,5 @@
-"""
-This file contains the unit tests for the ResultManager class
-"""
+# Unit tests for result loading and persistence helpers.
+
 
 import json 
 from unittest import TestCase
@@ -15,6 +14,16 @@ class TestResultManager(TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]["id"], 1)
         self.assertEqual(results[0]["result"], "pass")
+
+    def test_load_results_json_error(self):
+        with open("test_result.json", "w") as f:
+            f.write("invalid json{{{}}}")
+        results = load_results("test_result.json")
+        self.assertEqual(results, [])
+
+    def test_load_results_file_not_found(self):
+        results = load_results("file_not_exist.json")
+        self.assertEqual(results, [])
 
     def test_save_results(self):
         results = [{"id": 1, "result": "pass"}]

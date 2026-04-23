@@ -1,9 +1,8 @@
 """
-Defines the LogicPuzzle class.
+Logic puzzle class.
 
-This class represents a puzzle where the player solves a logic problem.
-The provided answer needs to be an integer.  
-The player's answer is validated against the correct result.
+Represents logic questions with numeric answers and can reveal an explanation
+after an unsuccessful attempt sequence.
 """
 from .math_puzzle import MathPuzzle
 

@@ -1,6 +1,4 @@
-"""
-This file contains the unit tests for the MathPuzzle
-"""
+# Unit tests for the abstract MathPuzzle base class.
 
 from unittest import TestCase
 

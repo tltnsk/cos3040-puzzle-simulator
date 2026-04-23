@@ -1,9 +1,8 @@
 """
-Defines the GuessWordPuzzle class.
+Guess-word puzzle class.
 
-This class is a puzzle which requires the player to guess a word which has some missing letters.
-The answer needs to be a string.
-The player's answer is validated against the correct answer.
+Represents text puzzles where the player fills in a hidden word and tracks
+incorrect guesses made during play.
 """
 
 from .text_puzzle import TextPuzzle

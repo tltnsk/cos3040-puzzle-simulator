@@ -1,9 +1,8 @@
 """
-Defines the abstract Puzzle base class
+Abstract base class for all puzzle types.
 
-The base class defines some common attributes and methods for all puzzle types. 
-Subclasses must implement the abstract method check_solution.
-
+Provides shared puzzle state, common attributes, and the
+method that concrete puzzle classes implement to check solutions.
 """
 
 # Make Puzzle class abstract. Subclasses must implement the abstract method 
@@ -38,7 +37,7 @@ class Puzzle(ABC):
         self.max_attempts = max_attempts
         self.attempts_made = attempts_made
         self.points = points
-        self.is_solved = is_solved
+        self._is_solved = is_solved
 
     @property
     def id(self):
@@ -89,7 +88,7 @@ class Puzzle(ABC):
         """Sets the number of attempts made so far."""
         if attempts_made < 0:
             raise ValueError("Attempts made cannot be negative")
-        elif attempts_made > self.__max_attempts:
+        elif attempts_made > self._max_attempts:
             raise ValueError("Attempts made cannot exceed maximum attempts.")
         self._attempts_made = attempts_made
 

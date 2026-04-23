@@ -1,9 +1,8 @@
 """
-Defines the TextPuzzle class - puzzle where the required answer is text-based
+Abstract base class for text-based puzzle types.
 
-It extends the base Puzzle class. 
-Defines a correct answer and also allowed variations.
-
+Extends Puzzle with a correct text answer and optional accepted variations
+that concrete text puzzles can compare user input against.
 """
 from abc import ABC, abstractmethod
 from .puzzle import Puzzle

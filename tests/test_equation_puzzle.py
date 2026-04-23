@@ -1,6 +1,6 @@
-"""
-This file contains the unit tests for the EquationPuzzle
-"""
+
+# Unit tests for EquationPuzzle behavior.
+
 
 from unittest import TestCase
 
@@ -43,14 +43,29 @@ class TestEquationPuzzle(TestCase):
         self.assertFalse(self.p.check_solution("four"))
 
     def test_check_solution_empty_string(self):
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             self.p.check_solution("")
 
     def test_check_solution_non_string(self):
         with self.assertRaises(ValueError):
             self.p.check_solution(123)
 
-    # Check solution state after correct result has been provided
-    def test_check_solution_correct_sets_solved(self):
+    def test_check_solution_returns_true_when_solved(self):
         self.p.check_solution("3")
-        self.assertTrue(self.p.solved)
+        self.assertTrue(self.p.check_solution("4"))
+
+    def test_max_attempts(self):
+        p = EquationPuzzle(
+            "EQ-T1",
+            "Solve: x = 3",
+            1,
+            1,
+            10,
+            equation="x = 3",
+            tolerance=1e-9,
+            correct_result=3,
+        )
+
+        self.assertFalse(p.check_solution("4"))
+        with self.assertRaises(ValueError):
+            p.check_solution("4")
