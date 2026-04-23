@@ -61,6 +61,11 @@ class TestGuessWordPuzzle(TestCase):
         with self.assertRaises(ValueError):
             self.p.check_solution("")
 
+    def test_check_solution_number(self):
+        with self.assertRaises(ValueError):
+            self.p.check_solution("0")
+        self.assertEqual(self.p.attempts_made, 0)
+
     def test_check_solution_returns_true_when_solved(self):
         self.p.check_solution("apple")
         self.assertTrue(self.p.check_solution("apples"))

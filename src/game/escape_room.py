@@ -143,6 +143,9 @@ class EscapeRoom:
                 if age < 0:
                     print("Age must be non-negative.")
                     continue
+                if age > 120 or age < 3:
+                    print("Please enter a valid age.")
+                    continue
             except ValueError:
                 print("Age must be a whole number.")
                 continue

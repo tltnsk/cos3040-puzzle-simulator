@@ -1,0 +1,15 @@
+Name                                      Stmts   Miss  Cover
+-------------------------------------------------------------
+src/game/escape_room.py                     199     13    93%
+src/models/player.py                         32      0   100%
+src/models/puzzles/equation_puzzle.py        31      0   100%
+src/models/puzzles/guess_word_puzzle.py      29      0   100%
+src/models/puzzles/logic_puzzle.py           26      0   100%
+src/models/puzzles/math_puzzle.py            12      1    92%
+src/models/puzzles/puzzle.py                 72      3    96%
+src/models/puzzles/riddle_puzzle.py          36      0   100%
+src/models/puzzles/text_puzzle.py            16      1    94%
+src/utils/puzzle_loader.py                   32      1    97%
+src/utils/result_manager.py                  17      0   100%
+-------------------------------------------------------------
+TOTAL                                       502     19    96%

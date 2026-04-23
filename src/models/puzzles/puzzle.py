@@ -120,12 +120,12 @@ class Puzzle(ABC):
 
     def __lt__(self, other):
         """
-        Check if one the current EquationPuzzle is less difficult than other EquationPuzzle.
+        Check if the current Puzzle is less difficult than other Puzzle.
 
         Parameters
         ----------
-        other : EquationPuzzle
-            Another EquationPuzzle instance to compare with.
+        other : Puzzle
+            Another Puzzle instance to compare with.
 
         Returns
         -------
@@ -138,12 +138,12 @@ class Puzzle(ABC):
 
     def __eq__(self, other):
         """
-        Check if two EquationPuzzle instances are equal based on their ID.
+        Check if two Puzzle instances are equal based on their ID.
 
         Parameters
         ----------
-        other : EquationPuzzle
-            Another EquationPuzzle instance to compare with.
+        other : Puzzle
+            Another Puzzle instance to compare with.
 
         Returns
         -------

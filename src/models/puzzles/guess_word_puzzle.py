@@ -7,6 +7,8 @@ incorrect guesses made during play.
 
 from .text_puzzle import TextPuzzle
 
+import re
+
 class GuessWordPuzzle(TextPuzzle):  
     """
     GuessWordPuzzle class
@@ -84,6 +86,10 @@ class GuessWordPuzzle(TextPuzzle):
         normalized_input = user_input.strip().lower()
         if not normalized_input:
             raise ValueError("Input cannot be empty.")
+        
+        # Allow only letters and spaces in the guess word
+        if not re.fullmatch(r"[A-Za-z]+( [A-Za-z]+)*", normalized_input):
+            raise ValueError("Input must contain only letters and spaces.")
 
         correct_answer = self.correct_answer.strip().lower()
         normalized_variations = [v.strip().lower() for v in self.allowed_variations]
