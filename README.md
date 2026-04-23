@@ -51,10 +51,10 @@ python-m src.main
 
 ### 3) Playing the game
 - Use the menu to start.
-- When the program starts, the player can
-      - start the game
-      - read instructions
-      - exit
+- When the program starts, the player can:
+  - start the game
+  - read instructions
+  - exit
 
 ### 4) Register the player
 The program asks the player to enter name and age. After registration, the game begins. 
