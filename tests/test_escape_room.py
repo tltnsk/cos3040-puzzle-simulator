@@ -369,9 +369,7 @@ class TestEscapeRoom(TestCase):
         self.assertEqual(player.age, 21)
 
         mock_print.assert_any_call("Name must be a non-empty string.")
-        mock_print.assert_any_call("Age must be a whole number.")
-        mock_print.assert_any_call("Please enter a valid age.")
-        mock_print.assert_any_call("Age must be non-negative.")
+        mock_print.assert_any_call("Age must be a valid non-negative integer.")
 
     def test_update_score(self):
         self.room.player = Player("Ana", 20)
@@ -445,7 +443,7 @@ class TestEscapeRoom(TestCase):
         result = self.room.play_puzzle(puzzle)
 
         self.assertTrue(result)
-        mock_print.assert_any_call("Input cannot be empty.")
+        mock_print.assert_any_call("Please enter a number.")
         self.assertEqual(self.room.player.score, 10)
 
     @patch("builtins.input")

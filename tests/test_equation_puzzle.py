@@ -38,15 +38,16 @@ class TestEquationPuzzle(TestCase):
     def test_check_solution_incorrect_result(self):
         self.assertFalse(self.p.check_solution("4"))
 
-    def test_check_solution_non_integer(self):
-        self.assertFalse(self.p.check_solution("four"))
-
     def test_check_solution_empty_string(self):
         with self.assertRaises(ValueError):
             self.p.check_solution("")
 
-    def test_check_solution_non_string(self):
+    def test_check_solution_non_integer(self):
         with self.assertRaises(ValueError):
+            self.p.check_solution("four")
+
+    def test_check_solution_non_string(self):
+        with self.assertRaises(TypeError):
             self.p.check_solution(123)
 
     def test_check_solution_returns_true_when_solved(self):

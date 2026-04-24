@@ -81,19 +81,16 @@ class LogicPuzzle(MathPuzzle):
             raise ValueError(
                 "Maximum attempts reached. You cannot make more guesses."
             )
-
-        if not re.match("^-?\d$", user_input):
-            raise ValueError("Please enter a number.")
-
-        if not user_input.strip():
+        
+        if not user_input:
             raise ValueError("Input cannot be empty.")
 
+        if not re.match("^-?[0-9]+$", user_input):
+            raise ValueError("Please enter an integer.")
+
         self.attempts_made += 1
-        
-        try:
-            user_result = int(user_input)
-        except ValueError:
-            return False
+
+        user_result = int(user_input)
 
         is_correct = user_result == self.correct_result
 

@@ -14,7 +14,7 @@ from src.models.puzzles.logic_puzzle import LogicPuzzle
 from src.models.puzzles.riddle_puzzle import RiddlePuzzle
 from src.utils.result_manager import append_result
 
-# Look up table for puzzle type labels.
+# Look up dictionary for puzzle type labels.
 _PUZZLE_TYPE_LABELS = {
     "guess_word": "Guess word",
     "riddle": "Riddle",
@@ -26,7 +26,7 @@ _PUZZLE_TYPE_LABELS = {
 class EscapeRoom:
     """
     EscapeRoom class.
-    Game controller.
+    Controls the game
     """
 
     def __init__(self, puzzles):
@@ -141,8 +141,9 @@ class EscapeRoom:
                 age = int(str_age)
                 player.age = age
                 break
-            except ValueError as error:
-                    print("Age must be a valid non-negative integer.")
+            except ValueError:
+                print("Age must be a valid non-negative integer.")
+                continue
             except TypeError:
                 print("Age must be a whole number.")
                 continue
@@ -254,17 +255,17 @@ class EscapeRoom:
             ValueError: If puzzle_type is not recognized.
         """
         key = puzzle_type.strip().lower()
-        type_map = {
+        types = {
             "guess_word": GuessWordPuzzle,
             "riddle": RiddlePuzzle,
             "equation": EquationPuzzle,
             "logic": LogicPuzzle,
         }
-        puzzle = type_map.get(key)
+        puzzle = types.get(key)
         if puzzle is None:
             raise ValueError(
                 f"Unknown puzzle type '{puzzle_type}'. "
-                f"Expected one of: {', '.join(type_map)}"
+                f"Expected one of: {', '.join(types)}"
             )
         return [p for p in self.puzzles if isinstance(p, puzzle)]
 
@@ -281,16 +282,32 @@ class EscapeRoom:
         return [p for p in self.puzzles if p.difficulty == difficulty]
 
     def play_puzzle(self, puzzle):
-        """Run the interaction loop for a single puzzle."""
+        """
+        Run the gameplay loop for a single puzzle.
+
+        The method displays puzzle details, asks the player
+        for input, and checks each answer until the puzzle is solved or the
+        player runs out of attempts. Riddle puzzles also support the
+        `hint` command, which shows the next hint without using an
+        attempt.
+
+        Parameters
+        ----------
+        puzzle
+            The puzzle instance to play.
+
+        Returns
+        -------
+        bool
+            `True` if the puzzle is solved, otherwise `False`.
+
+        Raises
+        ------
+        ValueError
+            If no player has been registered before starting the puzzle.
+        """
         if self.player is None:
             raise ValueError("No player is set.")
-
-        # Make sure puzzles are playable even if reused.
-        try:
-            puzzle.solved = False
-            puzzle.attempts_made = 0
-        except Exception:
-            pass
 
         puzzle_type = "Puzzle"
         if isinstance(puzzle, GuessWordPuzzle):

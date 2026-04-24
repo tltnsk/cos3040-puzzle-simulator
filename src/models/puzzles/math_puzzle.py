@@ -1,7 +1,7 @@
 """
 Abstract base class for numeric puzzle types.
 
-Extends Puzzle class with a stored numeric result 
+Extends Puzzle class with a stored numeric result
 that subclasses will validate.
 """
 from abc import ABC, abstractmethod

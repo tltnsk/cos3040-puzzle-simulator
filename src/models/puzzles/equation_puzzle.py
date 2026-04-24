@@ -92,21 +92,18 @@ class EquationPuzzle(MathPuzzle):
             raise ValueError(
                 "Maximum attempts reached. You cannot make more guesses."
             )
-
-        if not re.match("^-?\d+\.?\d*$", user_input):
+        
+        if not re.match(r"^-?[0-9]+\.?[0-9]*$", user_input):
             raise ValueError("Please enter a number.")
-
+        
         if not user_input.strip():
             raise ValueError("Input cannot be empty.")
-
+        
         # Count attempt (regardless of correctness).
         self.attempts_made += 1
 
-        try:
-            user_result = float(user_input)
-        except ValueError:
-            return False
-        
+        user_result = float(user_input)
+
         # Check if an answer is correct within a tolerance
         is_correct = math.isclose(
             user_result,

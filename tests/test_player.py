@@ -17,7 +17,7 @@ class TestPlayer(TestCase):
         self.assertEqual(self.p.age, 20)
 
     def test_name_setter(self):
-        for invalid in ("", "   ", 123, None):
+        for invalid in ("", "   ", "abc", 123, None):
             with self.assertRaises(ValueError):
                 self.p.name = invalid
         self.p.name = "Joana"

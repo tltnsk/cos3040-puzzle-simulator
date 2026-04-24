@@ -30,14 +30,15 @@ class TestLogicPuzzle(TestCase):
         self.assertFalse(self.p.check_solution("3"))
 
     def test_check_solution_non_integer(self):
-        self.assertFalse(self.p.check_solution("two"))
+        with self.assertRaises(ValueError):
+            self.p.check_solution("two")
 
     def test_check_solution_non_string(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.p.check_solution(123)
 
     def test_check_solution_empty_string(self):
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             self.p.check_solution("")
 
     def test_check_solution_returns_true_when_solved(self):

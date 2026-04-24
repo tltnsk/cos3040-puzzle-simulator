@@ -120,7 +120,7 @@ class GuessWordPuzzle(TextPuzzle):
             variation.strip().lower()
             for variation in self.allowed_variations
         ]
-        
+
         is_correct = (
             normalized_input == correct_answer
             or normalized_input in normalized_variations
