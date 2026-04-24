@@ -33,7 +33,7 @@ This project is a simple puzzle game. The player registers, chooses which puzzle
 
 
 ## Project Structure
-
+```
 cos3040-puzzle-simulator/
 ├── config.ini
 ├── data/
@@ -57,7 +57,7 @@ cos3040-puzzle-simulator/
 │       ├── puzzle_loader.py
 │       └── result_manager.py
 └── tests/
-
+```
 
 ## How to Run
 
