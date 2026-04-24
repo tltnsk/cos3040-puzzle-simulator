@@ -29,6 +29,35 @@ This project is a simple puzzle game. The player registers, chooses which puzzle
 - **Hints** for riddles: `RiddlePuzzle.use_hint()` returns the next hint for the puzzle.
 - **Tolerance-based numeric checking**: `EquationPuzzle` uses `math.isclose(...)` to compare float answers.
 - **File error handling**: results loading handles missing, empty or invalid JSON.
+- **Puzzle Filtering**: the program includes filtering functions so that a player can choose puzzles either by type or by difficulty.
+
+
+## Project Structure
+
+cos3040-puzzle-simulator/
+├── config.ini
+├── data/
+│   ├── puzzles.json
+│   └── results.json
+├── src/
+│   ├── main.py
+│   ├── game/
+│   │   └── escape_room.py
+│   ├── models/
+│   │   ├── player.py
+│   │   └── puzzles/
+│   │       ├── puzzle.py
+│   │       ├── text_puzzle.py
+│   │       ├── math_puzzle.py
+│   │       ├── guess_word_puzzle.py
+│   │       ├── riddle_puzzle.py
+│   │       ├── equation_puzzle.py
+│   │       └── logic_puzzle.py
+│   └── utils/
+│       ├── puzzle_loader.py
+│       └── result_manager.py
+└── tests/
+
 
 ## How to Run
 
@@ -46,7 +75,7 @@ RESULTS = results.json
 ### 2) Start the program
 From the project root run:
 ```bash
-python-m src.main
+python -m src.main
 ```
 
 ### 3) Playing the game
@@ -79,6 +108,9 @@ The player enters answers directly in the terminal.
 If the answer is correct, the player receives the number of points assigned to that puzzle. 
 
 ### 7) Finish the game
+At the end of the round, the player can choose to stop the game or play another game.
+If the player stops the game, the result is saved to the results file. 
+
 ## Data Formats
 - Puzzles file: JSON list of puzzle entries.
 - Results file: JSON list of result objects.
