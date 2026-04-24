@@ -266,7 +266,7 @@ class TestEscapeRoom(TestCase):
     @patch("builtins.input")
     @patch("builtins.print")
     def test_register_player_reprompts(self, mock_print, mock_input):
-        mock_input.side_effect = ["", "Ana", "abc", "-5", "21"]
+        mock_input.side_effect = ["", "Ana", "abc", "-5", "150", "21"]
 
         player = self.room.register_player()
 
@@ -275,6 +275,7 @@ class TestEscapeRoom(TestCase):
 
         mock_print.assert_any_call("Name must be a non-empty string.")
         mock_print.assert_any_call("Age must be a whole number.")
+        mock_print.assert_any_call("Please enter a valid age.")
         mock_print.assert_any_call("Age must be non-negative.")
 
     def test_update_score(self):
@@ -353,6 +354,15 @@ class TestEscapeRoom(TestCase):
         result = self.room.play_puzzle(puzzle)
 
         self.assertTrue(result)
+
+    @patch("builtins.input")
+    def test_play_puzzle_player_is_none(self, mock_input):
+        with self.assertRaises(ValueError):
+            self.room.player = None
+            puzzle = LogicPuzzle("L1", "Logic", 1, 2, 10, 2, "True/False")
+            mock_input.return_value = "2"
+
+            self.room.play_puzzle(puzzle)  
 
     def test_start_game_exits_from_menu(self):
         with patch.object(self.room, "show_main_menu", return_value="exit"), \
