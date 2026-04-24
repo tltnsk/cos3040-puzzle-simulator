@@ -1,10 +1,11 @@
 """
 Equation puzzle class.
 
-Represents puzzles that expect a numeric solution to an equation and validates
-player input using floating-point tolerance.
+Represents puzzles that expect a numeric solution to an equation.
+It validates player input using floating-point tolerance.
 """
 import math
+import re
 
 from .math_puzzle import MathPuzzle
 
@@ -71,7 +72,7 @@ class EquationPuzzle(MathPuzzle):
 
     def check_solution(self, user_input):
         """
-        Check if the player's numeric answer is correct within a tolerance.
+        Check if the player's numeric answer is correct.
 
         Parameters
         ----------
@@ -92,25 +93,27 @@ class EquationPuzzle(MathPuzzle):
                 "Maximum attempts reached. You cannot make more guesses."
             )
 
-        if not isinstance(user_input, str):
-            raise ValueError("Input must be a string.")
+        if not re.match("^-?\d+\.?\d*$", user_input):
+            raise ValueError("Please enter a number.")
 
         if not user_input.strip():
             raise ValueError("Input cannot be empty.")
 
-        # Count this attempt (regardless of correctness).
+        # Count attempt (regardless of correctness).
         self.attempts_made += 1
 
         try:
             user_result = float(user_input)
         except ValueError:
             return False
-
+        
+        # Check if an answer is correct within a tolerance
         is_correct = math.isclose(
             user_result,
             self.correct_result,
             rel_tol=self._tolerance,
         )
+
         if is_correct:
             self.solved = True
         return is_correct

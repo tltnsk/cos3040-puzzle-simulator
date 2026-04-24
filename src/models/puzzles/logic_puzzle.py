@@ -1,10 +1,12 @@
 """
 Logic puzzle class.
 
-Represents logic questions with numeric answers and can reveal an explanation
-after an unsuccessful attempt sequence.
+Represents logic questions with numeric answers and can show the
+explanation after several unsuccessful attempts.
 """
 from .math_puzzle import MathPuzzle
+
+import re
 
 
 class LogicPuzzle(MathPuzzle):
@@ -80,19 +82,21 @@ class LogicPuzzle(MathPuzzle):
                 "Maximum attempts reached. You cannot make more guesses."
             )
 
-        if not isinstance(user_input, str):
-            raise ValueError("Input must be a string.")
+        if not re.match("^-?\d$", user_input):
+            raise ValueError("Please enter a number.")
 
         if not user_input.strip():
             raise ValueError("Input cannot be empty.")
 
         self.attempts_made += 1
+        
         try:
             user_result = int(user_input)
         except ValueError:
             return False
 
         is_correct = user_result == self.correct_result
+
         if is_correct:
             self.solved = True
         return is_correct

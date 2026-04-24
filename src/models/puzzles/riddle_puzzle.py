@@ -125,10 +125,13 @@ class RiddlePuzzle(TextPuzzle):
             raise ValueError("Input cannot be empty.")
 
         correct_answer = self.correct_answer.strip().lower()
+
+        # Normalize the allowed variations
         normalized_variations = [
             variation.strip().lower()
             for variation in self.allowed_variations
         ]
+
         is_correct = (
             normalized_input == correct_answer
             or normalized_input in normalized_variations

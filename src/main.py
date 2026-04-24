@@ -46,22 +46,18 @@ def main():
         puzzles_path, results_path, data_dir = _load_paths_from_config(
             config_path
         )
-    except (FileNotFoundError, KeyError) as exc:
-        print(f"Config error: {exc}")
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
         return
 
     if not data_dir.exists():
         print(f"Data folder not found: {data_dir}")
         return
 
-    # Show which files are in the data folder.
-    for path in data_dir.iterdir():
-        print(path)
-
     try:
         puzzles = load_puzzles(str(puzzles_path))
-    except (OSError, ValueError, KeyError) as exc:
-        print(f"Could not load puzzles from '{puzzles_path}': {exc}")
+    except ValueError as e:
+        print(f"Could not load puzzles from '{puzzles_path}': {e}")
         return
 
     game = EscapeRoom(puzzles)

@@ -6,7 +6,6 @@ gameplay, and scoring.
 """
 
 from copy import deepcopy
-import re
 
 from src.models.player import Player
 from src.models.puzzles.equation_puzzle import EquationPuzzle
@@ -130,33 +129,24 @@ class EscapeRoom:
         print("\n--- Player registration ---")
         while True:
             name = input("Enter your name: ").strip()
-            if not name:
-                print("Name must be a non-empty string.")
-                continue
-            elif not re.match(r"[A-Z][a-z]+$", name):
-                print(
-                    "Name must start with an uppercase letter "
-                    "followed by lowercase letters."
-                )
-                continue
-            break
+            try:
+                player = Player(name, 20)
+                break
+            except ValueError as error:
+                print(str(error))
 
         while True:
             str_age = input("Enter your age: ").strip()
             try:
                 age = int(str_age)
-                if age < 0:
-                    print("Age must be non-negative.")
-                    continue
-                if age > 120 or age < 3:
-                    print("Please enter a valid age.")
-                    continue
-            except ValueError:
+                player.age = age
+                break
+            except ValueError as error:
+                    print("Age must be a valid non-negative integer.")
+            except TypeError:
                 print("Age must be a whole number.")
                 continue
-            break
 
-        player = Player(name, age)
         self.player = player
         print(f"\nWelcome, {player.name}!")
         return player

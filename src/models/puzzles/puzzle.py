@@ -1,7 +1,7 @@
 """
 Abstract base class for all puzzle types.
 
-Provides shared puzzle state, common attributes, and the
+It includes common attributes for all of the classes, and the
 method that concrete puzzle classes implement to check solutions.
 """
 
@@ -12,6 +12,8 @@ from abc import ABC, abstractmethod
 class Puzzle(ABC):
     """Puzzle class."""
 
+    # Setting attempts made to 0 and solved to false,
+    # as they are the default parameter values
     def __init__(
         self,
         puzzle_id,
@@ -73,7 +75,9 @@ class Puzzle(ABC):
     @difficulty.setter
     def difficulty(self, difficulty):
         """Sets the difficulty level of the puzzle."""
-        if difficulty not in [1, 2, 3]:  # 1 - easy, 2 - medium, 3 - hard
+
+        # raises a value error if invalid difficulty is set
+        if difficulty not in [1, 2, 3]: 
             raise ValueError(
                 "Invalid difficulty level. Difficulty must be 1, 2, or 3."
             )
@@ -128,7 +132,7 @@ class Puzzle(ABC):
         self._is_solved = is_solved
 
     def __str__(self):
-        """Return a readable summary of the puzzle."""
+        """Return a summary of the puzzle."""
         return (
             f"Puzzle {self.id}: {self.description} "
             f"(Difficulty {self.difficulty})"

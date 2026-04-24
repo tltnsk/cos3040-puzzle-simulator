@@ -1,8 +1,8 @@
 """
 Abstract base class for numeric puzzle types.
 
-Extends Puzzle with a stored numeric result that subclasses validate against
-their own answer-checking rules.
+Extends Puzzle class with a stored numeric result 
+that subclasses will validate.
 """
 from abc import ABC, abstractmethod
 
@@ -58,10 +58,10 @@ class MathPuzzle(Puzzle, ABC):
         user_input: str
             The user's answer to the puzzle (the result entered).
 
-        Returns
-        -------
-        bool
-            True if the user's result is correct, False otherwise.
+        Raises
+        ------
+        NotImplementedError
+            If the method is not implemented in a subclass.
         """
         raise NotImplementedError(
             "Subclasses of math puzzle should implement "

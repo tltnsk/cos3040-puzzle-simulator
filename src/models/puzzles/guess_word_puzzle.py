@@ -1,8 +1,8 @@
 """
 Guess-word puzzle class.
 
-Represents text puzzles where the player fills in a hidden word and tracks
-incorrect guesses made during play.
+Represents text puzzles where the player guesses a hidden word.
+The puzzle tracks the incorrect guesses made.
 """
 
 import re
@@ -115,10 +115,12 @@ class GuessWordPuzzle(TextPuzzle):
             raise ValueError("Input must contain only letters and spaces.")
 
         correct_answer = self.correct_answer.strip().lower()
+
         normalized_variations = [
             variation.strip().lower()
             for variation in self.allowed_variations
         ]
+        
         is_correct = (
             normalized_input == correct_answer
             or normalized_input in normalized_variations

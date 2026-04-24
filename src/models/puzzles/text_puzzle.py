@@ -76,10 +76,10 @@ class TextPuzzle(Puzzle, ABC):
         user_input: str
             The user's answer to the puzzle.
 
-        Returns
-        -------
-        bool
-            True if the user's answer is correct, False otherwise.
+        Raises
+        ------
+        NotImplementedError
+            If the method is not implemented in a subclass.
         """
         raise NotImplementedError(
             "Subclasses which are text puzzles must implement "

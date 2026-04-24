@@ -1,9 +1,10 @@
 """
 This is the player class for the puzzle simulator.
 
-Stores player details and manages score updates during gameplay.
+Stores player details and manages player score updates.
 """
 
+import re
 
 class Player:
     """
@@ -35,11 +36,17 @@ class Player:
     @name.setter
     def name(self, name):
         """Set the player's name."""
+        new_name = name.strip() if isinstance(name, str) else name
 
         # name must be a non-empty string
-        if not isinstance(name, str) or name.strip() == "":
-            raise ValueError("Player name must be a non-empty string.")
-        self._name = name.strip()
+        if not isinstance(name, str) or new_name == "":
+            raise ValueError("Name must be a non-empty string.")
+        if not re.fullmatch(r"[A-Z][a-z]+", new_name):
+            raise ValueError(
+                "Name must start with an uppercase letter "
+                "followed by lowercase letters."
+            )
+        self._name = new_name
 
     @property
     def age(self):
@@ -50,9 +57,11 @@ class Player:
     def age(self, age):
         """Set the player's age"""
 
-        # must be an integer greater than 0
-        if not isinstance(age, int) or age < 0:
+        # must be a valid integer greater than 0
+        if isinstance(age, bool) or not isinstance(age, int) or age < 0:
             raise ValueError("Player age must be a non-negative integer.")
+        if age > 120 or age < 3:
+            raise ValueError("Please enter a valid age.")
         self._age = age
 
     @property
@@ -77,6 +86,6 @@ class Player:
         """Reset the player's score to 0."""
         self._score = 0
 
-    def __str__(self) -> str:
-        """Return the player details as a readable string."""
+    def __str__(self):
+        """Return the player details."""
         return f"{self.name} (Age: {self.age}, Score: {self.score})"
