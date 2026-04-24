@@ -7,6 +7,7 @@ the Escape Room gameplay.
 
 import configparser
 from pathlib import Path
+
 from src.game.escape_room import EscapeRoom
 from src.utils.puzzle_loader import load_puzzles
 
@@ -42,7 +43,9 @@ def main():
     config_path = Path(__file__).resolve().parent.parent / "config.ini"
 
     try:
-        puzzles_path, results_path, data_dir = _load_paths_from_config(config_path)
+        puzzles_path, results_path, data_dir = _load_paths_from_config(
+            config_path
+        )
     except (FileNotFoundError, KeyError) as exc:
         print(f"Config error: {exc}")
         return
@@ -63,7 +66,9 @@ def main():
 
     game = EscapeRoom(puzzles)
     try:
-        game.start_game(results_file_path=str(results_path) if results_path else None)
+        game.start_game(
+            results_file_path=str(results_path) if results_path else None
+        )
     except KeyboardInterrupt:
         print("\nGame interrupted by user.")
         return

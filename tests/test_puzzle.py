@@ -5,12 +5,13 @@ from unittest import TestCase
 
 from src.models.puzzles.puzzle import Puzzle
 
-# Small subclass so I can actually create a Puzzle object and 
-# test the parent class  
+
+# Small subclass so I can actually create a Puzzle object and
+# test the parent class.
 class _ConcretePuzzle(Puzzle):
     def check_solution(self, solution):
         return bool(solution)
-    
+
 
 # This subclass calls the base implementation so the test
 # can execute the abstract method body and verify it raises the expected error.
@@ -18,9 +19,10 @@ class _SuperCallingPuzzle(Puzzle):
     def check_solution(self, solution):
         return super().check_solution(solution)
 
+
 class TestPuzzle(TestCase):
     def setUp(self):
-        # Valid puzzle instance 
+        # Valid puzzle instance
         self.p = _ConcretePuzzle("P-1", "A test puzzle", 2, 3, 10)
 
     def test_puzzle_is_abstract(self):
@@ -89,7 +91,10 @@ class TestPuzzle(TestCase):
         self.assertTrue(self.p.solved)
 
     def test_str_format(self):
-        self.assertEqual(str(self.p), "Puzzle P-1: A test puzzle (Difficulty 2)")
+        self.assertEqual(
+            str(self.p),
+            "Puzzle P-1: A test puzzle (Difficulty 2)",
+        )
 
     def test_comparison_lt(self):
         a = _ConcretePuzzle("P-1", "desc", 1, 1, 1)

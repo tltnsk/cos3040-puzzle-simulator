@@ -5,12 +5,23 @@ Provides shared puzzle state, common attributes, and the
 method that concrete puzzle classes implement to check solutions.
 """
 
-# Make Puzzle class abstract. Subclasses must implement the abstract method 
+# Make Puzzle class abstract. Subclasses must implement the abstract method
 from abc import ABC, abstractmethod
 
+
 class Puzzle(ABC):
-    """Puzzle class"""
-    def __init__(self, puzzle_id, description, difficulty, max_attempts, points, attempts_made=0, is_solved=False):
+    """Puzzle class."""
+
+    def __init__(
+        self,
+        puzzle_id,
+        description,
+        difficulty,
+        max_attempts,
+        points,
+        attempts_made=0,
+        is_solved=False,
+    ):
         """
         Initialize a puzzle with its shared attributes.
 
@@ -25,12 +36,12 @@ class Puzzle(ABC):
         max_attempts : int
             Maximum number of attempts allowed.
         points : int
-            Points for solving the puzzle 
+            Points for solving the puzzle.
         attempts_made : int, optional
             Number of attempts made so far.
         is_solved : bool, optional
-            Whether the puzzle has been solved or not
-        """     
+            Whether the puzzle has been solved or not.
+        """
         self._id = puzzle_id
         self.description = description
         self.difficulty = difficulty
@@ -63,7 +74,9 @@ class Puzzle(ABC):
     def difficulty(self, difficulty):
         """Sets the difficulty level of the puzzle."""
         if difficulty not in [1, 2, 3]:  # 1 - easy, 2 - medium, 3 - hard
-            raise ValueError("Invalid difficulty level. Difficulty must be 1, 2, or 3.")
+            raise ValueError(
+                "Invalid difficulty level. Difficulty must be 1, 2, or 3."
+            )
         self._difficulty = difficulty
 
     @property
@@ -116,7 +129,10 @@ class Puzzle(ABC):
 
     def __str__(self):
         """Return a readable summary of the puzzle."""
-        return f"Puzzle {self.id}: {self.description} (Difficulty {self.difficulty})"
+        return (
+            f"Puzzle {self.id}: {self.description} "
+            f"(Difficulty {self.difficulty})"
+        )
 
     def __lt__(self, other):
         """
@@ -130,11 +146,12 @@ class Puzzle(ABC):
         Returns
         -------
         bool
-            True if the puzzle is less difficult than the other puzzle, False otherwise.
+            True if the puzzle is less difficult than the other puzzle,
+            False otherwise.
         """
         if not isinstance(other, Puzzle):
             return False
-        return self.difficulty < other.difficulty     
+        return self.difficulty < other.difficulty
 
     def __eq__(self, other):
         """
@@ -152,14 +169,14 @@ class Puzzle(ABC):
         """
         if not isinstance(other, Puzzle):
             return False
-        return self.id == other.id 
-    
+        return self.id == other.id
+
     @abstractmethod
     def check_solution(self, solution):
         """
         Check whether the provided solution is correct.
 
-        This method must be implemented by subclasses.       
+        This method must be implemented by subclasses.
 
         Parameters
         ----------
@@ -171,4 +188,6 @@ class Puzzle(ABC):
         NotImplementedError
             If the method is not implemented in a subclass.
         """
-        raise NotImplementedError("Subclasses must implement the 'check_solution' method.")
+        raise NotImplementedError(
+            "Subclasses must implement the 'check_solution' method."
+        )

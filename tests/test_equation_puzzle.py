@@ -4,7 +4,6 @@
 
 from unittest import TestCase
 
-
 from src.models.puzzles.equation_puzzle import EquationPuzzle
 
 

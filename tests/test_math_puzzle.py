@@ -11,14 +11,18 @@ class _ConcreteMathPuzzle(MathPuzzle):
             return float(user_input) == float(self.correct_result)
         except ValueError:
             return False
-        
+
+
 class _SuperCallingPuzzle(MathPuzzle):
     def check_solution(self, solution):
         return super().check_solution(solution)
 
+
 class TestMathPuzzleBase(TestCase):
     def setUp(self):
-        self.p = _ConcreteMathPuzzle("M-1", "desc", 1, 1, 1, correct_result=2.5)
+        self.p = _ConcreteMathPuzzle(
+            "M-1", "desc", 1, 1, 1, correct_result=2.5
+        )
 
     def test_math_puzzle_is_abstract(self):
         with self.assertRaises(TypeError):
@@ -37,9 +41,11 @@ class TestMathPuzzleBase(TestCase):
         self.assertFalse(self.p.check_solution("abc"))
 
     def test_base_check_solution(self):
-        puzzle = _SuperCallingPuzzle("M-1", "desc", 1, 1, 1, correct_result=2.5)
+        puzzle = _SuperCallingPuzzle(
+            "M-1", "desc", 1, 1, 1, correct_result=2.5
+        )
 
-        # Calling super() reaches MathPuzzle.check_solution(), which should raise
-        # NotImplementedError until a real subclass overrides the behavior.
+        # Calling super() reaches MathPuzzle.check_solution(),
+        # which should raise NotImplementedError until overridden.
         with self.assertRaises(NotImplementedError):
             puzzle.check_solution("answer")

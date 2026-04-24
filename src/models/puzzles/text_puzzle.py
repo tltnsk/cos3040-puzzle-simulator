@@ -5,15 +5,28 @@ Extends Puzzle with a correct text answer and optional accepted variations
 that concrete text puzzles can compare user input against.
 """
 from abc import ABC, abstractmethod
+
 from .puzzle import Puzzle
+
 
 class TextPuzzle(Puzzle, ABC):
     """
     TextPuzzle class
     Abstract class for text-based puzzles.
     """
-    def __init__(self, puzzle_id, description, difficulty, max_attempts,
-                 points, correct_answer, allowed_variations=None, attempts_made=0, is_solved=False):
+
+    def __init__(
+        self,
+        puzzle_id,
+        description,
+        difficulty,
+        max_attempts,
+        points,
+        correct_answer,
+        allowed_variations=None,
+        attempts_made=0,
+        is_solved=False,
+    ):
         """
         Initialize a text-based puzzle.
 
@@ -47,8 +60,8 @@ class TextPuzzle(Puzzle, ABC):
     def correct_answer(self):
         """Return the correct answer for the puzzle."""
         return self._correct_answer
-    
-    @property 
+
+    @property
     def allowed_variations(self):
         """Returns a list of acceptable variations for the correct answer."""
         return self._allowed_variations
@@ -56,7 +69,7 @@ class TextPuzzle(Puzzle, ABC):
     @abstractmethod
     def check_solution(self, user_input):
         """
-        Abstract method to check if the user's answer matches the correct answer or any allowed variation.
+        Check the user's answer against allowed correct variations.
 
         Parameters
         ----------
@@ -68,4 +81,7 @@ class TextPuzzle(Puzzle, ABC):
         bool
             True if the user's answer is correct, False otherwise.
         """
-        raise NotImplementedError("Subclasses which are text puzzles must implement the 'check_solution' method.")
+        raise NotImplementedError(
+            "Subclasses which are text puzzles must implement "
+            "the 'check_solution' method."
+        )

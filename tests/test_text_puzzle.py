@@ -8,11 +8,16 @@ from src.models.puzzles.text_puzzle import TextPuzzle
 
 class _ConcreteTextPuzzle(TextPuzzle):
     def check_solution(self, user_input):
-        return user_input.strip().lower() == self.correct_answer.strip().lower()
-    
+        return (
+            user_input.strip().lower()
+            == self.correct_answer.strip().lower()
+        )
+
+
 class _SuperCallingPuzzle(TextPuzzle):
     def check_solution(self, solution):
         return super().check_solution(solution)
+
 
 class TestTextPuzzleBase(TestCase):
     def setUp(self):
@@ -37,14 +42,18 @@ class TestTextPuzzleBase(TestCase):
         self.assertEqual(self.p.allowed_variations, ["hi", "hey"])
 
     def test_allowed_variations_default_to_empty_list(self):
-        p = _ConcreteTextPuzzle("T-2", "desc", 1, 1, 1, correct_answer="Hello")
+        p = _ConcreteTextPuzzle(
+            "T-2", "desc", 1, 1, 1, correct_answer="Hello"
+        )
         self.assertEqual(p.allowed_variations, [])
         self.assertEqual(p._allowed_variations, [])
 
     def test_base_check_solution(self):
-        puzzle = _SuperCallingPuzzle("T-1", "desc", 1, 1, 1, correct_answer="a")
+        puzzle = _SuperCallingPuzzle(
+            "T-1", "desc", 1, 1, 1, correct_answer="a"
+        )
 
-        # Calling super() reaches TextPuzzle.check_solution(), which should raise
-        # NotImplementedError until a real subclass overrides the behavior.
+        # Calling super() reaches TextPuzzle.check_solution(),
+        # which should raise NotImplementedError until overridden.
         with self.assertRaises(NotImplementedError):
             puzzle.check_solution("answer")

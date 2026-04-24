@@ -5,4 +5,3 @@ This file makes sure tests can be executed from the repository root with:
 
     python3 -m unittest
 """
-

@@ -7,13 +7,26 @@ provides hints.
 
 from .text_puzzle import TextPuzzle
 
+
 class RiddlePuzzle(TextPuzzle):
     """
     RiddlePuzzle class
     Puzzle where the player guesses a riddle word.
     """
-    def __init__(self, puzzle_id, description, difficulty, max_attempts,
-                 points, correct_answer, hints, allowed_variations=None, attempts_made=0, is_solved=False):
+
+    def __init__(
+        self,
+        puzzle_id,
+        description,
+        difficulty,
+        max_attempts,
+        points,
+        correct_answer,
+        hints,
+        allowed_variations=None,
+        attempts_made=0,
+        is_solved=False,
+    ):
         """
         Initialize a riddle puzzle.
 
@@ -40,25 +53,34 @@ class RiddlePuzzle(TextPuzzle):
         is_solved : bool, optional
             Whether the puzzle has already been solved.
         """
-        super().__init__(puzzle_id, description, difficulty, max_attempts,
-                         points, correct_answer, allowed_variations=allowed_variations, attempts_made=attempts_made, is_solved=is_solved)
-        
+        super().__init__(
+            puzzle_id,
+            description,
+            difficulty,
+            max_attempts,
+            points,
+            correct_answer,
+            allowed_variations=allowed_variations,
+            attempts_made=attempts_made,
+            is_solved=is_solved,
+        )
+
         self._hints = hints
         self._hints_used_count = 0
 
-    @property 
+    @property
     def hints(self):
         """Returns the list of hints for the riddle."""
         return self._hints
-    
+
     @property
     def hints_used_count(self):
         """Return the number of hints used so far."""
         return self._hints_used_count
-    
+
     def use_hint(self):
         """
-        Provides the next hint and increments the count of hints used. 
+        Provides the next hint and increments the count of hints used.
         If no hints are available, it returns None.
 
         Returns
@@ -90,7 +112,9 @@ class RiddlePuzzle(TextPuzzle):
             return True
 
         if self.attempts_made >= self.max_attempts:
-            raise ValueError("Maximum attempts reached. You cannot make more guesses.")
+            raise ValueError(
+                "Maximum attempts reached. You cannot make more guesses."
+            )
 
         if not isinstance(user_input, str):
             raise ValueError("Input must be a string.")
@@ -101,8 +125,14 @@ class RiddlePuzzle(TextPuzzle):
             raise ValueError("Input cannot be empty.")
 
         correct_answer = self.correct_answer.strip().lower()
-        normalized_variations = [variation.strip().lower() for variation in self.allowed_variations]
-        is_correct = normalized_input == correct_answer or normalized_input in normalized_variations
+        normalized_variations = [
+            variation.strip().lower()
+            for variation in self.allowed_variations
+        ]
+        is_correct = (
+            normalized_input == correct_answer
+            or normalized_input in normalized_variations
+        )
 
         # increase number of attempts made
         self.attempts_made += 1

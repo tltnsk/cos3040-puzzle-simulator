@@ -18,9 +18,12 @@ class TestRiddlePuzzle(TestCase):
             hints=["It makes music.", "It has black and white keys."],
             allowed_variations=["a piano"],
         )
-    
+
     def test_hints_property(self):
-        self.assertEqual(self.p.hints, ["It makes music.", "It has black and white keys."])
+        self.assertEqual(
+            self.p.hints,
+            ["It makes music.", "It has black and white keys."],
+        )
 
     def test_hints_used_count_property(self):
         self.assertEqual(self.p.hints_used_count, 0)
@@ -31,7 +34,7 @@ class TestRiddlePuzzle(TestCase):
     def test_allowed_variations(self):
         self.assertEqual(self.p._allowed_variations, ["a piano"])
 
-    # Hints 
+    # Hints
     def test_use_hints_first(self):
         self.assertEqual(self.p.use_hint(), "It makes music.")
 
@@ -39,7 +42,7 @@ class TestRiddlePuzzle(TestCase):
         self.p.use_hint()
         self.assertEqual(self.p.hints_used_count, 1)
 
-    # Check solution 
+    # Check solution
     def test_check_solution_exact_match(self):
         self.assertTrue(self.p.check_solution("piano"))
 
@@ -50,7 +53,7 @@ class TestRiddlePuzzle(TestCase):
     def test_check_solution_wrong(self):
         self.assertFalse(self.p.check_solution("clock"))
 
-    # Check solution: invalid answers 
+    # Check solution: invalid answers
     def test_check_solution_non_string_raises(self):
         with self.assertRaises(ValueError):
             self.p.check_solution(123)
@@ -82,4 +85,3 @@ class TestRiddlePuzzle(TestCase):
         self.assertFalse(p.check_solution("apple"))
         with self.assertRaises(ValueError):
             p.check_solution("piano")
-        

@@ -5,12 +5,13 @@ from unittest import TestCase
 
 from src.models.player import Player
 
+
 class TestPlayer(TestCase):
     def setUp(self):
         self.p = Player("Ana", 20)
 
     def test_player_name(self):
-        self.assertEqual(self.p.name, "Ana")    
+        self.assertEqual(self.p.name, "Ana")
 
     def test_player_age(self):
         self.assertEqual(self.p.age, 20)
@@ -35,7 +36,7 @@ class TestPlayer(TestCase):
 
     def test_add_score_negative(self):
         with self.assertRaises(ValueError):
-            self.p.add_score(-10)   
+            self.p.add_score(-10)
 
     def test_reset_score(self):
         self.p.add_score(10)

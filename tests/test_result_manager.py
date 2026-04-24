@@ -1,10 +1,10 @@
 # Unit tests for result loading and persistence helpers.
 
-
-import json 
+import json
 from unittest import TestCase
 
 from src.utils.result_manager import load_results, save_results, append_result
+
 
 class TestResultManager(TestCase):
     def test_load_results_valid_file(self):

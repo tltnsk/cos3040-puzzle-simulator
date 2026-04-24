@@ -1,7 +1,8 @@
 """
 This class represents the game controller.
 
-It handles menu flow, player registration, puzzle selection, gameplay, and scoring.
+It handles menu flow, player registration, puzzle selection,
+gameplay, and scoring.
 """
 
 from copy import deepcopy
@@ -76,7 +77,8 @@ class EscapeRoom:
         5) Save results to a file (if file path is given)
 
         Args:
-            results_file_path (str, optional): Path to write results. If the file name is not given, results are not saved
+            results_file_path (str, optional): Path to write results.
+                If the file name is not given, results are not saved.
         """
         while True:
             choice = self.show_main_menu()
@@ -132,7 +134,10 @@ class EscapeRoom:
                 print("Name must be a non-empty string.")
                 continue
             elif not re.match(r"[A-Z][a-z]+$", name):
-                print("Name must start with an uppercase letter followed by lowercase letters.")
+                print(
+                    "Name must start with an uppercase letter "
+                    "followed by lowercase letters."
+                )
                 continue
             break
 
@@ -207,24 +212,38 @@ class EscapeRoom:
             print(f"  - {key} ({label})")
 
         while True:
-            puzzle_type = input("Enter puzzle type (e.g. guess_word): ").strip().lower()
+            puzzle_type = input(
+                "Enter puzzle type (e.g. guess_word): "
+            ).strip().lower()
             if puzzle_type in _PUZZLE_TYPE_LABELS:
                 filtered = self.filter_puzzles_by_type(puzzle_type)
                 if not filtered:
                     print("Such type of puzzle does not exist. Try another.")
                     continue
                 return deepcopy(filtered)
-            print(f"Unknown type. Choose one of: {', '.join(_PUZZLE_TYPE_LABELS)}")
+            print(
+                "Unknown type. Choose one of: "
+                f"{', '.join(_PUZZLE_TYPE_LABELS)}"
+            )
 
     def _choose_by_difficulty(self):
-        """Ask the user to enter the level of difficulty 1-3 and return filtered puzzles."""
+        """
+        Ask the user to enter the level of difficulty 1-3.
+
+        Return filtered puzzles.
+        """
         while True:
-            puzzle_difficulty = input("Enter difficulty (1, 2, or 3): ").strip()
+            puzzle_difficulty = input(
+                "Enter difficulty (1, 2, or 3): "
+            ).strip()
             if puzzle_difficulty in ("1", "2", "3"):
                 difficulty = int(puzzle_difficulty)
                 filtered = self.filter_puzzles_by_difficulty(difficulty)
                 if not filtered:
-                    print("No puzzles with that level of difficulty. Try another.")
+                    print(
+                        "No puzzles with that level of difficulty. "
+                        "Try another."
+                    )
                     continue
                 return deepcopy(filtered)
             print("Please enter 1, 2, or 3.")
@@ -294,7 +313,11 @@ class EscapeRoom:
             puzzle_type = "Logic"
 
         print(f"\n--- {puzzle_type} ({puzzle.id}) ---")
-        print(f"Difficulty: {puzzle.difficulty} | Points: {puzzle.points} | Attempts: {puzzle.max_attempts}")
+        print(
+            f"Difficulty: {puzzle.difficulty} | "
+            f"Points: {puzzle.points} | "
+            f"Attempts: {puzzle.max_attempts}"
+        )
         print(puzzle.description)
 
         if isinstance(puzzle, RiddlePuzzle):
@@ -308,7 +331,10 @@ class EscapeRoom:
 
             user_input = input(prompt).strip()
 
-            if isinstance(puzzle, RiddlePuzzle) and user_input.lower() == "hint":
+            if (
+                isinstance(puzzle, RiddlePuzzle)
+                and user_input.lower() == "hint"
+            ):
                 hint = puzzle.use_hint()
                 if hint is None:
                     print("No more hints.")
@@ -330,7 +356,10 @@ class EscapeRoom:
 
             remaining = puzzle.max_attempts - puzzle.attempts_made
             print(f"Incorrect. Attempts remaining: {remaining}")
-            if isinstance(puzzle, GuessWordPuzzle) and puzzle.incorrect_guesses:
+            if (
+                isinstance(puzzle, GuessWordPuzzle)
+                and puzzle.incorrect_guesses
+            ):
                 last_few = puzzle.incorrect_guesses[-3:]
                 print(f"Incorrect guesses: {', '.join(last_few)}")
 

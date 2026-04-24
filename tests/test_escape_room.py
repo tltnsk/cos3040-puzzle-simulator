@@ -6,18 +6,53 @@ from unittest.mock import patch
 
 from src.game.escape_room import EscapeRoom
 from src.models.player import Player
-from src.models.puzzles.riddle_puzzle import RiddlePuzzle
+from src.models.puzzles.equation_puzzle import EquationPuzzle
 from src.models.puzzles.guess_word_puzzle import GuessWordPuzzle
 from src.models.puzzles.logic_puzzle import LogicPuzzle
-from src.models.puzzles.equation_puzzle import EquationPuzzle
+from src.models.puzzles.riddle_puzzle import RiddlePuzzle
+
 
 class TestEscapeRoom(TestCase):
     def setUp(self):
         self.puzzles = [
-            RiddlePuzzle("RD-1", "What has keys but can't open locks?", 1, 3, 10, correct_answer="piano", hints=[], allowed_variations=[]),
-            GuessWordPuzzle("GW-1", "_ppl_", 1, 3, 10, correct_answer="apple", allowed_variations=[]),
-            LogicPuzzle("LP-1", "How many truth values exist?", 1, 2, 10, correct_result=2, explanation="True and false."),
-            EquationPuzzle("EQ-1", "Solve: x + 2 = 3", 1, 3, 19, equation="x + 2 = 3", tolerance=1e-9, correct_result=1)
+            RiddlePuzzle(
+                "RD-1",
+                "What has keys but can't open locks?",
+                1,
+                3,
+                10,
+                correct_answer="piano",
+                hints=[],
+                allowed_variations=[],
+            ),
+            GuessWordPuzzle(
+                "GW-1",
+                "_ppl_",
+                1,
+                3,
+                10,
+                correct_answer="apple",
+                allowed_variations=[],
+            ),
+            LogicPuzzle(
+                "LP-1",
+                "How many truth values exist?",
+                1,
+                2,
+                10,
+                correct_result=2,
+                explanation="True and false.",
+            ),
+            EquationPuzzle(
+                "EQ-1",
+                "Solve: x + 2 = 3",
+                1,
+                3,
+                19,
+                equation="x + 2 = 3",
+                tolerance=1e-9,
+                correct_result=1,
+            ),
         ]
 
         self.room = EscapeRoom(self.puzzles)
@@ -30,14 +65,48 @@ class TestEscapeRoom(TestCase):
             self.room.puzzles = None
 
         self.puzzles = [
-            RiddlePuzzle("R-1", "What has keys but can't open locks?", 1, 3, 10, correct_answer="piano", hints=[], allowed_variations=[]),
-            GuessWordPuzzle("G-1", "_ppl_", 1, 3, 10, correct_answer="apple", allowed_variations=[]),
-            LogicPuzzle("L-1", "How many truth values exist?", 1, 2, 10, correct_result=2, explanation="True and false."),
-            EquationPuzzle("E-1", "Solve: x + 2 = 3", 1, 3, 19, equation="x + 2 = 3", tolerance=1e-9, correct_result=1)
+            RiddlePuzzle(
+                "R-1",
+                "What has keys but can't open locks?",
+                1,
+                3,
+                10,
+                correct_answer="piano",
+                hints=[],
+                allowed_variations=[],
+            ),
+            GuessWordPuzzle(
+                "G-1",
+                "_ppl_",
+                1,
+                3,
+                10,
+                correct_answer="apple",
+                allowed_variations=[],
+            ),
+            LogicPuzzle(
+                "L-1",
+                "How many truth values exist?",
+                1,
+                2,
+                10,
+                correct_result=2,
+                explanation="True and false.",
+            ),
+            EquationPuzzle(
+                "E-1",
+                "Solve: x + 2 = 3",
+                1,
+                3,
+                19,
+                equation="x + 2 = 3",
+                tolerance=1e-9,
+                correct_result=1,
+            ),
         ]
         self.room.puzzles = self.puzzles
-        self.assertEqual(self.room.puzzles, self.puzzles)   
-    
+        self.assertEqual(self.room.puzzles, self.puzzles)
+
     def test_player_default_none(self):
         self.assertIsNone(self.room.player)
 
@@ -145,11 +214,15 @@ class TestEscapeRoom(TestCase):
 
     @patch("builtins.print")
     @patch("builtins.input")
-    def test_choose_by_type_reprompts_after_unknown_type(self, mock_input, mock_print):
+    def test_choose_by_type_reprompts_after_unknown_type(
+        self,
+        mock_input,
+        mock_print,
+    ):
         mock_input.side_effect = ["puzzle", "riddle"]
 
         puzzles = [
-            RiddlePuzzle("R1", "Riddle 1", 2, 3, 10, "piano", [], [])
+            RiddlePuzzle("R1", "Riddle 1", 2, 3, 10, "piano", [], []),
         ]
         room = EscapeRoom(puzzles)
 
@@ -157,30 +230,50 @@ class TestEscapeRoom(TestCase):
 
         self.assertEqual(len(result), 1)
         self.assertIsInstance(result[0], RiddlePuzzle)
-        mock_print.assert_any_call("Unknown type. Choose one of: guess_word, riddle, equation, logic")
+        mock_print.assert_any_call(
+            "Unknown type. Choose one of: guess_word, riddle, equation, logic"
+        )
 
     @patch("builtins.print")
     @patch("builtins.input")
-    def test_choose_by_type_reprompts_when_no_puzzles_for_that_type(self, mock_input, mock_print):
+    def test_choose_by_type_reprompts_when_no_puzzles_for_that_type(
+        self,
+        mock_input,
+        mock_print,
+    ):
         mock_input.side_effect = ["logic", "riddle"]
 
         puzzles = [
             RiddlePuzzle("R1", "Riddle 1", 1, 3, 10, "piano", [], []),
-            GuessWordPuzzle("G1", "_ppl_", 1, 3, 10, correct_answer="apple", allowed_variations=[]),
+            GuessWordPuzzle(
+                "G1",
+                "_ppl_",
+                1,
+                3,
+                10,
+                correct_answer="apple",
+                allowed_variations=[],
+            ),
         ]
 
         room = EscapeRoom(puzzles)
 
         result = room._choose_by_type()
 
-        mock_print.assert_any_call("Such type of puzzle does not exist. Try another.")
+        mock_print.assert_any_call(
+            "Such type of puzzle does not exist. Try another."
+        )
 
         self.assertEqual(len(result), 1)
         self.assertIsInstance(result[0], RiddlePuzzle)
 
     @patch("builtins.print")
     @patch("builtins.input")
-    def test_choose_by_difficulty_reprompts_when_no_puzzles_for_that_level(self, mock_input, mock_print):
+    def test_choose_by_difficulty_reprompts_when_no_puzzles_for_that_level(
+        self,
+        mock_input,
+        mock_print,
+    ):
         mock_input.side_effect = ["3", "1"]
 
         puzzles = [
@@ -192,7 +285,9 @@ class TestEscapeRoom(TestCase):
 
         result = room._choose_by_difficulty()
 
-        mock_print.assert_any_call("No puzzles with that level of difficulty. Try another.")
+        mock_print.assert_any_call(
+            "No puzzles with that level of difficulty. Try another."
+        )
 
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0].difficulty, 1)
@@ -218,7 +313,7 @@ class TestEscapeRoom(TestCase):
         mock_input.side_effect = ["5", "2"]
 
         puzzles = [
-            RiddlePuzzle("R1", "Riddle 1", 2, 3, 10, "piano", [], [])
+            RiddlePuzzle("R1", "Riddle 1", 2, 3, 10, "piano", [], []),
         ]
         room = EscapeRoom(puzzles)
 
@@ -299,7 +394,7 @@ class TestEscapeRoom(TestCase):
             {
                 "name": "Ana",
                 "score": 10,
-            }
+            },
         )
 
     def test_save_results_no_player(self):
@@ -320,7 +415,11 @@ class TestEscapeRoom(TestCase):
 
     @patch("builtins.print")
     @patch("builtins.input")
-    def test_play_puzzle_guess_word_shows_incorrect_guesses(self, mock_input, mock_print):
+    def test_play_puzzle_guess_word_shows_incorrect_guesses(
+        self,
+        mock_input,
+        mock_print,
+    ):
         self.room.player = Player("Ana", 20)
         puzzle = GuessWordPuzzle("G1", "_ppl_", 1, 3, 10, "apple", [])
         mock_input.side_effect = ["grape", "melon", "berry"]
@@ -334,7 +433,11 @@ class TestEscapeRoom(TestCase):
 
     @patch("builtins.print")
     @patch("builtins.input")
-    def test_play_puzzle_reprompts_on_empty_input(self, mock_input, mock_print):
+    def test_play_puzzle_reprompts_empty(
+        self,
+        mock_input,
+        mock_print,
+    ):
         self.room.player = Player("Ana", 20)
         puzzle = EquationPuzzle("E1", "Equation", 1, 3, 10, "x=1", 1)
         mock_input.side_effect = ["", "1"]
@@ -362,12 +465,14 @@ class TestEscapeRoom(TestCase):
             puzzle = LogicPuzzle("L1", "Logic", 1, 2, 10, 2, "True/False")
             mock_input.return_value = "2"
 
-            self.room.play_puzzle(puzzle)  
+            self.room.play_puzzle(puzzle)
 
     def test_start_game_exits_from_menu(self):
-        with patch.object(self.room, "show_main_menu", return_value="exit"), \
-             patch.object(self.room, "register_player") as mock_register, \
-             patch("builtins.print") as mock_print:
+        with (
+            patch.object(self.room, "show_main_menu", return_value="exit"),
+            patch.object(self.room, "register_player") as mock_register,
+            patch("builtins.print") as mock_print,
+        ):
             self.room.start_game()
 
         mock_register.assert_not_called()
@@ -379,10 +484,16 @@ class TestEscapeRoom(TestCase):
         self.room.player = Player("Ana", 20)
         mock_input.return_value = "n"
 
-        with patch.object(self.room, "show_main_menu", return_value="start"), \
-             patch.object(self.room, "register_player", return_value=self.room.player), \
-             patch.object(self.room, "choose_puzzle_mode", return_value=[]), \
-             patch.object(self.room, "play_puzzle") as mock_play:
+        with (
+            patch.object(self.room, "show_main_menu", return_value="start"),
+            patch.object(
+                self.room,
+                "register_player",
+                return_value=self.room.player,
+            ),
+            patch.object(self.room, "choose_puzzle_mode", return_value=[]),
+            patch.object(self.room, "play_puzzle") as mock_play,
+        ):
             self.room.start_game()
 
         mock_play.assert_not_called()

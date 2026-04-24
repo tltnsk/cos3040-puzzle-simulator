@@ -4,6 +4,7 @@ This is the player class for the puzzle simulator.
 Stores player details and manages score updates during gameplay.
 """
 
+
 class Player:
     """
     Player class

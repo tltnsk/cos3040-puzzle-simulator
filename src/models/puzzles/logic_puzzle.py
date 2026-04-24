@@ -6,13 +6,25 @@ after an unsuccessful attempt sequence.
 """
 from .math_puzzle import MathPuzzle
 
+
 class LogicPuzzle(MathPuzzle):
     """
-    LogicPuzzle class 
+    LogicPuzzle class
     Puzzle that validates a numeric logical answer.
     """
-    def __init__(self, puzzle_id, description, difficulty, max_attempts,
-                 points, correct_result, explanation, attempts_made=0, is_solved=False):
+
+    def __init__(
+        self,
+        puzzle_id,
+        description,
+        difficulty,
+        max_attempts,
+        points,
+        correct_result,
+        explanation,
+        attempts_made=0,
+        is_solved=False,
+    ):
         """
         Initialize a logic puzzle.
 
@@ -64,7 +76,9 @@ class LogicPuzzle(MathPuzzle):
             return True
 
         if self.attempts_made >= self.max_attempts:
-            raise ValueError("Maximum attempts reached. You cannot make more guesses.")
+            raise ValueError(
+                "Maximum attempts reached. You cannot make more guesses."
+            )
 
         if not isinstance(user_input, str):
             raise ValueError("Input must be a string.")
@@ -77,7 +91,7 @@ class LogicPuzzle(MathPuzzle):
             user_result = int(user_input)
         except ValueError:
             return False
-        
+
         is_correct = user_result == self.correct_result
         if is_correct:
             self.solved = True

@@ -12,6 +12,7 @@ from src.models.puzzles.guess_word_puzzle import GuessWordPuzzle
 from src.models.puzzles.logic_puzzle import LogicPuzzle
 from src.models.puzzles.riddle_puzzle import RiddlePuzzle
 
+
 def _require_field(entry, field_name):
     """
     Return a required field from a puzzle JSON entry.
@@ -34,7 +35,9 @@ def _require_field(entry, field_name):
         If the field is not found in the entry.
     """
     if field_name not in entry:
-        raise KeyError(f"Missing required field '{field_name}' in puzzle entry: {entry}")
+        raise KeyError(
+            f"Missing required field '{field_name}' in puzzle entry: {entry}"
+        )
     return entry[field_name]
 
 
@@ -121,6 +124,8 @@ def load_puzzles(file_path):
                 )
             )
         else:
-            raise ValueError(f"Unknown puzzle type '{puzzle_type}' in entry: {entry}")
+            raise ValueError(
+                f"Unknown puzzle type '{puzzle_type}' in entry: {entry}"
+            )
 
     return puzzles

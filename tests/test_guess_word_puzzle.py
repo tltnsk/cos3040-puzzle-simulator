@@ -2,6 +2,7 @@
 
 
 from unittest import TestCase
+
 from src.models.puzzles.guess_word_puzzle import GuessWordPuzzle
 
 
@@ -17,19 +18,19 @@ class TestGuessWordPuzzle(TestCase):
             allowed_variations=["an apple"],
         )
 
-    # Add incorrect guesses 
+    # Add incorrect guesses
     def test_add_incorrect_guess(self):
         self.p.add_incorrect_guess("mango")
         self.assertEqual(self.p.incorrect_guesses, ["mango"])
 
-    # Check solution 
+    # Check solution
     def test_check_solution_exact_match(self):
         self.assertTrue(self.p.check_solution("apple"))
 
     def test_check_solution_variation_accepted(self):
         self.assertTrue(self.p.check_solution("an apple"))
 
-    # Check solution: wrong answer 
+    # Check solution: wrong answer
 
     def test_check_solution_wrong_returns_false(self):
         self.assertFalse(self.p.check_solution("mango"))

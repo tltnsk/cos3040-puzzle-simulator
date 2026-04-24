@@ -8,13 +8,26 @@ import math
 
 from .math_puzzle import MathPuzzle
 
+
 class EquationPuzzle(MathPuzzle):
     """
     EquationPuzzle class
     Puzzle where the player solves a mathematical equation
     """
-    def __init__(self, puzzle_id, description, difficulty, max_attempts,
-                 points, equation, correct_result, tolerance=1e-9, attempts_made=0, is_solved=False):
+
+    def __init__(
+        self,
+        puzzle_id,
+        description,
+        difficulty,
+        max_attempts,
+        points,
+        equation,
+        correct_result,
+        tolerance=1e-9,
+        attempts_made=0,
+        is_solved=False,
+    ):
         """
         Initialize an equation-based puzzle.
 
@@ -35,7 +48,7 @@ class EquationPuzzle(MathPuzzle):
         correct_result : float
             The numeric result expected from the player.
         tolerance : float, optional
-            The tolerance for floating-point comparison. 
+            The tolerance for floating-point comparison.
         attempts_made : int, optional
             Number of attempts already used.
         is_solved : bool, optional
@@ -44,17 +57,17 @@ class EquationPuzzle(MathPuzzle):
         super().__init__(puzzle_id, description, difficulty, max_attempts,
                          points, correct_result, attempts_made, is_solved)
         self._equation = equation
-        self._tolerance = tolerance  
+        self._tolerance = tolerance
 
-    @property 
+    @property
     def equation(self):
         """Return the equation to be solved as a string."""
         return self._equation
 
-    @property 
+    @property
     def tolerance(self):
         """Return the tolerance used for floating-point comparison."""
-        return self._tolerance 
+        return self._tolerance
 
     def check_solution(self, user_input):
         """
@@ -68,13 +81,16 @@ class EquationPuzzle(MathPuzzle):
         Returns
         -------
         bool
-            True if the user's result is correct within the tolerance, False otherwise.
+            True if the user's result is correct within the tolerance,
+            False otherwise.
         """
         if self.solved:
             return True
 
         if self.attempts_made >= self.max_attempts:
-            raise ValueError("Maximum attempts reached. You cannot make more guesses.")
+            raise ValueError(
+                "Maximum attempts reached. You cannot make more guesses."
+            )
 
         if not isinstance(user_input, str):
             raise ValueError("Input must be a string.")
@@ -90,7 +106,11 @@ class EquationPuzzle(MathPuzzle):
         except ValueError:
             return False
 
-        is_correct = math.isclose(user_result, self.correct_result, rel_tol=self._tolerance)
+        is_correct = math.isclose(
+            user_result,
+            self.correct_result,
+            rel_tol=self._tolerance,
+        )
         if is_correct:
             self.solved = True
         return is_correct

@@ -5,17 +5,29 @@ Represents text puzzles where the player fills in a hidden word and tracks
 incorrect guesses made during play.
 """
 
-from .text_puzzle import TextPuzzle
-
 import re
 
-class GuessWordPuzzle(TextPuzzle):  
+from .text_puzzle import TextPuzzle
+
+
+class GuessWordPuzzle(TextPuzzle):
     """
     GuessWordPuzzle class
     Puzzle where the player has to guess a word with several letters provided.
     """
-    def __init__(self, puzzle_id, description, difficulty, max_attempts,
-                 points, correct_answer, allowed_variations=None, attempts_made=0, is_solved=False):
+
+    def __init__(
+        self,
+        puzzle_id,
+        description,
+        difficulty,
+        max_attempts,
+        points,
+        correct_answer,
+        allowed_variations=None,
+        attempts_made=0,
+        is_solved=False,
+    ):
         """
         Initialize a guess-word puzzle.
 
@@ -40,15 +52,24 @@ class GuessWordPuzzle(TextPuzzle):
         is_solved : bool, optional
             Whether the puzzle has already been solved.
         """
-        super().__init__(puzzle_id, description, difficulty, max_attempts,
-                         points, correct_answer, allowed_variations, attempts_made, is_solved)
+        super().__init__(
+            puzzle_id,
+            description,
+            difficulty,
+            max_attempts,
+            points,
+            correct_answer,
+            allowed_variations,
+            attempts_made,
+            is_solved,
+        )
         self._incorrect_guesses = []
 
     @property
     def incorrect_guesses(self):
         """Returns a list of incorrect guesses made by the player."""
         return self._incorrect_guesses
-    
+
     def add_incorrect_guess(self, guess):
         """
         Add an incorrect guess to the list of incorrect guesses.
@@ -59,7 +80,7 @@ class GuessWordPuzzle(TextPuzzle):
             The player's incorrect guess.
         """
         self._incorrect_guesses.append(guess)
-    
+
     def check_solution(self, user_input):
         """
         Check if the guessed word matches the correct answer.
@@ -76,24 +97,32 @@ class GuessWordPuzzle(TextPuzzle):
         """
         if self.solved:
             return True
-        
+
         if self.attempts_made >= self.max_attempts:
-            raise ValueError("Maximum attempts reached. You cannot make more guesses.")
-        
+            raise ValueError(
+                "Maximum attempts reached. You cannot make more guesses."
+            )
+
         if not isinstance(user_input, str):
             raise ValueError("Input must be a string.")
-    
+
         normalized_input = user_input.strip().lower()
         if not normalized_input:
             raise ValueError("Input cannot be empty.")
-        
+
         # Allow only letters and spaces in the guess word
         if not re.fullmatch(r"[A-Za-z]+( [A-Za-z]+)*", normalized_input):
             raise ValueError("Input must contain only letters and spaces.")
 
         correct_answer = self.correct_answer.strip().lower()
-        normalized_variations = [v.strip().lower() for v in self.allowed_variations]
-        is_correct = normalized_input == correct_answer or normalized_input in normalized_variations
+        normalized_variations = [
+            variation.strip().lower()
+            for variation in self.allowed_variations
+        ]
+        is_correct = (
+            normalized_input == correct_answer
+            or normalized_input in normalized_variations
+        )
 
         self.attempts_made += 1
 

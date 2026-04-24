@@ -5,13 +5,16 @@ Extends Puzzle with a stored numeric result that subclasses validate against
 their own answer-checking rules.
 """
 from abc import ABC, abstractmethod
+
 from .puzzle import Puzzle
+
 
 class MathPuzzle(Puzzle, ABC):
     """
-    MathPuzzle class 
-    Abstract class for numeric puzzles. 
+    MathPuzzle class
+    Abstract class for numeric puzzles.
     """
+
     def __init__(self, puzzle_id, description, difficulty, max_attempts,
                  points, correct_result, attempts_made=0, is_solved=False):
         """
@@ -59,6 +62,8 @@ class MathPuzzle(Puzzle, ABC):
         -------
         bool
             True if the user's result is correct, False otherwise.
-
         """
-        raise NotImplementedError("Subclasses of math puzzle should implement the check_solution method")
+        raise NotImplementedError(
+            "Subclasses of math puzzle should implement "
+            "the check_solution method"
+        )
