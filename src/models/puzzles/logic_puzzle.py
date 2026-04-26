@@ -81,7 +81,7 @@ class LogicPuzzle(MathPuzzle):
             raise ValueError(
                 "Maximum attempts reached. You cannot make more guesses."
             )
-        
+
         if not user_input:
             raise ValueError("Input cannot be empty.")
 
